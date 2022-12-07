@@ -1,10 +1,8 @@
 const { ipcRenderer, contextBridge} = require('electron')
 
 
-
 const WINDOW_API  = {
-    greet: 'hola mundo',
-    preferencias: () => ipcRenderer.invoke("prefo")
+    preferencias: () => ipcRenderer.invoke("get/preferencias")
 }
 
 

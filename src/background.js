@@ -7,7 +7,10 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 import { autoUpdater } from 'electron-updater'
 import sql from 'sqlite3'
 import path from 'path'
+
+
 const dbPath = path.join(app.getPath('userData'), 'dbi.db')
+let preferencias_
 
 let win
 let actualizacion
@@ -133,31 +136,18 @@ let dbs = new sql.Database(dbPath, sql.OPEN_READWRITE, (err) =>{
   }
 })
 
-let ab
 
-
+// --> EVENTO QUE RECIBE LAS PREFERENCIAS DE LA DB
 dbs.all('select * from configuracion', (err, rows)=>{
-  // event.sender.send('recv_configuration', rows[0])
-  ab = rows[0]
+  preferencias_ = rows[0]
 })
 
+// --> RETORNA LOS DATOS
 
-ipcMain.handle("prefo", async (event, args)=>{
-  return ab
-  // dbs.all('select * from configuracion', (err, rows)=>{
-  //   // event.sender.send('recv_configuration', rows[0])
-  //   return rows[0]
-  // })
+ipcMain.handle("get/preferencias", async (event, args)=>{
+  return preferencias_
 })
 
-// --> CONSULTAR TABLA DE CONFIGURACION
-
-ipcMain.on('get_configuration', (event)=>{
-
-  dbs.all('select * from configuracion', (err, rows)=>{
-    // event.sender.send('recv_configuration', rows[0])
-  })
-})
 
 // --> INSERTAR TOKEN EN TABLA CONFIGURACIONES
 
