@@ -16,7 +16,9 @@ export default {
     },
     methods: {
         async incio(){
-            console.log(await window.api.preferencias())
+            let a = await window.api.preferencias()
+
+            this.info = a.IP
         }
     },
     mounted() {
