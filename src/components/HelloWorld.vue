@@ -16,7 +16,7 @@ export default {
     },
     methods: {
         async incio(){
-            console.log(await window.api.preferencias)
+            console.log(await window.api.preferencias())
         }
     },
     mounted() {

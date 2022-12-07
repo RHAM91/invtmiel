@@ -133,8 +133,14 @@ let dbs = new sql.Database(dbPath, sql.OPEN_READWRITE, (err) =>{
   }
 })
 
-ipcMain.handle("prefo", async (event, args)=>{
+
+var ObtenerPreferencias = async function() {
   return 1
+}
+
+
+ipcMain.handle("prefo", async (event, args)=>{
+  return ObtenerPreferencias()
   // dbs.all('select * from configuracion', (err, rows)=>{
   //   // event.sender.send('recv_configuration', rows[0])
   //   return rows[0]
