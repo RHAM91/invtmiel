@@ -1,10 +1,13 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, dialog } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 import { autoUpdater } from 'electron-updater'
+import sql from 'sqlite3'
+import path from 'path'
+const dbPath = path.join(app.getPath('userData'), 'dbi.db')
 
 let win
 let actualizacion
@@ -52,7 +55,8 @@ async function createWindow() {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
+      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
+      preload: path.join(__dirname, "preload.js")
     }
   })
 
@@ -66,7 +70,7 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
 
-  actualizacion = setInterval(buscarActualizacion, 10 * 60 * 1000) // para cambiar el tiempo del intervalo en minutos, modificar solo el primer 60
+  //actualizacion = setInterval(buscarActualizacion, 10 * 60 * 1000) // para cambiar el tiempo del intervalo en minutos, modificar solo el primer 60
 
 }
 
@@ -98,6 +102,8 @@ app.on('ready', async () => {
     }
   }
   createWindow()
+
+  
 })
 
 // --> EVENTO PARA BUSCAR Y MOSTRAR ACTUALIZACION
@@ -114,6 +120,43 @@ ipcMain.on('ok_update', (event) =>{
   autoUpdater.quitAndInstall()
 })
 
+
+// --> EVENTO CONECTAR CON BASE DE DATOS SQLITE3
+
+let dbs = new sql.Database(dbPath, sql.OPEN_READWRITE, (err) =>{
+  if(err && err.code == "SQLITE_CANTOPEN"){
+    console.log('NO SE PUEDE ABRIR DB')
+    return
+  }else if(err){
+      console.log("Getting error " + err)
+      exit(1)
+  }
+})
+
+ipcMain.handle("prefo", async (event, args)=>{
+  return 1
+  // dbs.all('select * from configuracion', (err, rows)=>{
+  //   // event.sender.send('recv_configuration', rows[0])
+  //   return rows[0]
+  // })
+})
+
+// --> CONSULTAR TABLA DE CONFIGURACION
+
+ipcMain.on('get_configuration', (event)=>{
+
+  dbs.all('select * from configuracion', (err, rows)=>{
+    // event.sender.send('recv_configuration', rows[0])
+  })
+})
+
+// --> INSERTAR TOKEN EN TABLA CONFIGURACIONES
+
+ipcMain.on('save_token', (event) =>{
+  dbs.run('insert into configuracion(token_sesion) values (?)', [event])
+})
+
+//console.log(app.getAppPath())
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
