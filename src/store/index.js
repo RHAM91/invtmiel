@@ -54,8 +54,8 @@ export default new Vuex.Store({
       commit('set_preferencias', r)
     },
     async obtener_token_sesion({commit, state}){
-      const r = await window.api.token_sesion()
-      commit('set_token_sesion', r)
+      // const r = await window.api.token_sesion()
+      // commit('set_token_sesion', r)
     }
   },
   plugins: [vuexPersist.plugin],
