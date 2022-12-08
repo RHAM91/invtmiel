@@ -84,7 +84,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .cuerpo{
         width: 100%;
         height: 100vh;   
