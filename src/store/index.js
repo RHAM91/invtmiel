@@ -10,7 +10,7 @@ const vuexPersist = new VuexPersist({
   key: 'kat',
   storage: window.localStorage,
   reducer: state => ({
-
+    token_sesion: state.token_sesion
   }) 
 })
 
@@ -36,6 +36,15 @@ export default new Vuex.Store({
     },
     sesion_token: state =>{
       return state.token_sesion
+    },
+    sesion_token_formateado: state =>{
+      let token_formateado = {
+        headers:{
+          Authorization: `Bearer ${state.token_sesion}`
+        }
+      }
+
+      return token_formateado
     }
   },
   mutations: {
@@ -54,14 +63,6 @@ export default new Vuex.Store({
       const r = await window.api.preferencias()
       commit('set_preferencias', r)
     },
-    async obtener_token_sesion({commit, state}){
-
-      window.api.send('get_token', '')
-      window.api.receive('get_token_', (args)=>{
-        commit('set_token_sesion', args)
-      })
-
-    }
   },
   plugins: [vuexPersist.plugin],
   modules: {

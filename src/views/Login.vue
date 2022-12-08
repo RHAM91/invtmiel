@@ -24,7 +24,7 @@
                             </b-col>
                         </b-row>
                     </form>
-                    <b-button type="button" variant="danger" size="sm" @click="gt">obtener token</b-button>
+                    
                 </b-container>
             </div>
         </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import axios from 'axios'
 
 export default {
@@ -57,18 +57,29 @@ export default {
 
             try {
                 let query = await axios.post(`http://${this.ip_api}:${this.puerto}/api/auth/local`, formulario)
+
+
+                if (query.data.message == 'Invalid identifier or password') {
+
+                    alert('USUARIO O CONTRASEÑA INVALIDOS')
+
+                }else if(query.data.user.blocked){
+
+                    alert('USUARIO BLOQUEADO')
+
+                }else{
+
+                    this.set_token_sesion(query.data.jwt)
+                    this.$router.replace('Main')
+                }
                 
-                window.api.guardar_token(query.data.jwt)
-                await console.log('[-]' + this.sesion_token)
+                
 
             } catch (e) {
                 console.log(e)
             }
         },
-        async gt(){
-            this.obtener_token_sesion()
-        },
-        ...mapActions(['obtener_token_sesion'])
+        ...mapMutations(['set_token_sesion'])
     },
 }
 </script>

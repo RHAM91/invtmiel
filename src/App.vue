@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Principal',
@@ -15,11 +15,10 @@ export default {
   },
   methods: {
     
-    ...mapActions(['obtener_preferencias', 'obtener_token_sesion']),
+    ...mapActions(['obtener_preferencias']),
   },
   mounted() {
     this.obtener_preferencias()
-    this.obtener_token_sesion()
   },
 }
 </script>
