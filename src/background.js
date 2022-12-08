@@ -11,6 +11,7 @@ import path from 'path'
 
 const dbPath = path.join(app.getPath('userData'), 'dbi.db')
 let preferencias_
+let token_sesion_
 
 let win
 let actualizacion
@@ -142,10 +143,21 @@ dbs.all('select * from configuracion', (err, rows)=>{
   preferencias_ = rows[0]
 })
 
+// --> EVENTO QUE RETORNA EL TOKEN QUE SE GUARDÓ EN LA BD LOCAL
+
+dbs.all('select * from tokens', (err, rows)=>{
+  token_sesion_ = rows[0].token_sesion
+})
+
+
 // --> RETORNA LOS DATOS
 
 ipcMain.handle("get/preferencias", async (event, args)=>{
   return preferencias_
+})
+
+ipcMain.handle("get/token_sesion", async (event, args)=>{
+  return token_sesion_
 })
 
 
