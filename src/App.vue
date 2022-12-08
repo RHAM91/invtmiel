@@ -13,10 +13,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['obtener_preferencias'])
+    ...mapActions(['obtener_preferencias', 'obtener_token_sesion'])
   },
   mounted() {
     this.obtener_preferencias()
+    this.obtener_token_sesion()
   },
 }
 </script>

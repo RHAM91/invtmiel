@@ -24,7 +24,7 @@ export default new Vuex.Store({
 
   },
   getters: {
-    obtener_ip: state =>{ // es para obtener un dato de forma directa
+    ip_api: state =>{ // es para obtener un dato de forma directa
       return state.preferencias.IP
     },
     puerto: state =>{
@@ -32,20 +32,30 @@ export default new Vuex.Store({
     },
     puerto_dev: state =>{
       return state.preferencias.puerto_dev
+    },
+    sesion_token: state =>{
+      return state.token_sesion
     }
   },
   mutations: {
     // SISTEMA
     set_preferencias(state, data){
       state.preferencias = data
+    },
+    set_token_sesion(state, data){
+      state.token_sesion = data
     }
   },
   actions: {
     // SISTEMA
-    
+
     async obtener_preferencias({commit, state}){
       const r = await window.api.preferencias()
       commit('set_preferencias', r)
+    },
+    async obtener_token_sesion({commit, state}){
+      const r = await window.api.token_sesion()
+      commit('set_token_sesion', r)
     }
   },
   plugins: [vuexPersist.plugin],

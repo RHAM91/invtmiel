@@ -146,7 +146,15 @@ dbs.all('select * from configuracion', (err, rows)=>{
 // --> EVENTO QUE RETORNA EL TOKEN QUE SE GUARDÓ EN LA BD LOCAL
 
 dbs.all('select * from tokens', (err, rows)=>{
-  token_sesion_ = rows[0].token_sesion
+
+  console.log(rows)
+
+  if (rows.length == 0) {
+    token_sesion_ = null
+  }else{
+    token_sesion_ = rows[0].token_sesion
+  }
+
 })
 
 
@@ -163,8 +171,10 @@ ipcMain.handle("get/token_sesion", async (event, args)=>{
 
 // --> INSERTAR TOKEN EN TABLA CONFIGURACIONES
 
-ipcMain.on('save_token', (event) =>{
-  dbs.run('insert into configuracion(token_sesion) values (?)', [event])
+ipcMain.on('save_token', (event, args) =>{
+  console.log(args)
+  dbs.run('insert into tokens(token_sesion) values (?)', [args])
+  console.log('[+] Token guardado en db local')
 })
 
 //console.log(app.getAppPath())
