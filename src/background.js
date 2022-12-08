@@ -11,7 +11,7 @@ import path from 'path'
 
 const dbPath = path.join(app.getPath('userData'), 'dbi.db')
 let preferencias_
-let token_sesion_
+// let token_sesion_
 
 let win
 let actualizacion
@@ -143,19 +143,8 @@ dbs.all('select * from configuracion', (err, rows)=>{
   preferencias_ = rows[0]
 })
 
-// --> EVENTO QUE RETORNA EL TOKEN QUE SE GUARDÓ EN LA BD LOCAL
 
-dbs.all('select * from tokens', (err, rows)=>{
 
-  console.log(rows)
-
-  if (rows.length == 0) {
-    token_sesion_ = null
-  }else{
-    token_sesion_ = rows[0].token_sesion
-  }
-
-})
 
 
 // --> RETORNA LOS DATOS
@@ -164,20 +153,29 @@ ipcMain.handle("get/preferencias", async (event, args)=>{
   return preferencias_
 })
 
-ipcMain.handle("get/token_sesion", async (event, args)=>{
-  return token_sesion_
+
+// --> EVENTO QUE RETORNA EL TOKEN QUE SE GUARDÓ EN LA BD LOCAL
+
+ipcMain.on('get_token', (event) =>{
+  dbs.all('select * from tokens', (err, rows)=>{
+  
+    if (rows.length == 0) {
+      event.sender.send('get_token_', null)
+    }else{
+      event.sender.send('get_token_', rows[0].token_sesion)
+    }
+  
+  })
 })
 
-
-// --> INSERTAR TOKEN EN TABLA CONFIGURACIONES
+// --> INSERTAR TOKEN EN TABLA TOKENS
 
 ipcMain.on('save_token', (event, args) =>{
-  console.log(args)
+  
   dbs.run('insert into tokens(token_sesion) values (?)', [args])
-  console.log('[+] Token guardado en db local')
+
 })
 
-//console.log(app.getAppPath())
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {

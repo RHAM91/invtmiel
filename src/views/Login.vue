@@ -32,9 +32,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
-
 
 export default {
     name: 'Login',
@@ -43,8 +42,8 @@ export default {
     },
     data() {
         return {
-            usuario: '',
-            pass: ''
+            usuario: 'romario',
+            pass: '124578asD.$'
         }
     },
     methods: {
@@ -60,15 +59,16 @@ export default {
                 let query = await axios.post(`http://${this.ip_api}:${this.puerto}/api/auth/local`, formulario)
                 
                 window.api.guardar_token(query.data.jwt)
-                await console.log(this.sesion_token)
+                await console.log('[-]' + this.sesion_token)
 
             } catch (e) {
                 console.log(e)
             }
         },
         async gt(){
-            await console.log(this.sesion_token)
-        }
+            this.obtener_token_sesion()
+        },
+        ...mapActions(['obtener_token_sesion'])
     },
 }
 </script>

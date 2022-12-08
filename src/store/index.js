@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import VuexPersist from 'vuex-persist'
 
+
 Vue.use(Vuex)
 
 const vuexPersist = new VuexPersist({
@@ -54,8 +55,12 @@ export default new Vuex.Store({
       commit('set_preferencias', r)
     },
     async obtener_token_sesion({commit, state}){
-      // const r = await window.api.token_sesion()
-      // commit('set_token_sesion', r)
+
+      window.api.send('get_token', '')
+      window.api.receive('get_token_', (args)=>{
+        commit('set_token_sesion', args)
+      })
+
     }
   },
   plugins: [vuexPersist.plugin],
