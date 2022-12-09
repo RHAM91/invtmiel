@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/views/Login.vue'
 import Main from '@/views/Main.vue'
+import Inventario from '@/views/Inventario.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,14 @@ const routes = [
     path: '/main',
     name: 'Main',
     component: Main,
+    meta:{
+      autentificado: true
+    }
+  },
+  {
+    path: '/inventario',
+    name: 'Inventario',
+    component: Inventario,
     meta:{
       autentificado: true
     }

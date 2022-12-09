@@ -1,12 +1,12 @@
 <template>
     <h1>
-        Inventario
+        Menu
     </h1>
 </template>
 
 <script>
 export default {
-    name: 'EsctucturaInventario',
+    name: 'Menu',
     data() {
         return {
             
