@@ -7,13 +7,9 @@
         <div class="contenedor_secciones">
             <!-- MENU PARA BOTONES -->
             <div class="seccion_menu"> 
-                <div class="titulo_moduloX">
-                    Inventario
-                </div>
-                
-                <Menu />
-            </div>
 
+            </div>
+            
             <!-- CONTENEDOR -->
 
             <div class="seccion_cuerpo">
@@ -24,15 +20,8 @@
 </template>
 
 <script>
-
-import Menu from '@/components/Inventario/menu.vue'
-
-
 export default {
     name: 'VistaInventario',
-    components:{
-        Menu
-    },
     data() {
         return {
             
@@ -45,5 +34,5 @@ export default {
 </script>
 
 <style>
-   
+    
 </style>
