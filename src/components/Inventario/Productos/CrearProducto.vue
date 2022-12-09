@@ -1,16 +1,12 @@
 <template>
-    <div class="contenedor_menu">
-       
-        <div class="btn_menu">
-            sdfss
-        </div>
-
-    </div>
+    <h1>
+        Crear Producto
+    </h1>
 </template>
 
 <script>
 export default {
-    name: 'MenuInventario',
+    name: 'CrearProducto',
     data() {
         return {
             
@@ -23,5 +19,5 @@ export default {
 </script>
 
 <style>
-    
+
 </style>

@@ -8,10 +8,63 @@
             <!-- MENU PARA BOTONES -->
             <div class="seccion_menu"> 
                 <div class="titulo_moduloX">
+                    <!-- TITULO DEL MODULO -->
                     Inventario
                 </div>
-                
-                <Menu />
+
+                <div class="contenedor_menu">
+                    <!-- SECCION DONDE VAN LOS BOTONES DEL MENU -->
+       
+                    <div class="btn_menu">
+                        <div class="icono_boton">
+                            <i class="fas fa-truck-loading"></i>
+                        </div>
+                        Salidas
+                    </div>
+
+                    <div class="btn_menu">
+                        <div class="icono_boton">
+                            <i class="fas fa-dolly-flatbed"></i>
+                        </div>
+                        Entradas
+                    </div>
+
+                    <div class="btn_menu">
+                        <div class="icono_boton">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        Productos
+                    </div>
+
+                    <div class="btn_menu">
+                        <div class="icono_boton">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        Clientes
+                    </div>
+
+                    <div class="btn_menu">
+                        <div class="icono_boton">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        Proveedores
+                    </div>
+
+                    <div class="btn_menu">
+                        <div class="icono_boton">
+                            <i class="fas fa-th"></i>
+                        </div>
+                        Inventario
+                    </div>
+
+                    <div class="btn_menu">
+                        <div class="icono_boton">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        Configuración
+                    </div>
+
+                </div>
             </div>
 
             <!-- CONTENEDOR -->
@@ -25,14 +78,10 @@
 
 <script>
 
-import Menu from '@/components/Inventario/menu.vue'
 
 
 export default {
     name: 'VistaInventario',
-    components:{
-        Menu
-    },
     data() {
         return {
             

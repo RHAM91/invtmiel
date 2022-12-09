@@ -67,12 +67,12 @@ export default {
             font-size: 14px;
             display: flex;
             align-items: center;
-            padding-left: 15px;
             box-sizing: border-box;
             border-radius: 5px;
             cursor: pointer;
             user-select: none;
             transition: .4s ease;
+            
         }
 
         .btn_menu:hover{
@@ -85,6 +85,13 @@ export default {
           justify-content: center;
           align-items: center;
           border-bottom: 1px solid #e6e6e6;
+        }
+
+        .icono_boton{
+          width: 20px;
+          height: 20px;
+          margin-right: 7px;
+          margin-left: 7px;
         }
 
 </style>
