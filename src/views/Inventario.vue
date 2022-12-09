@@ -29,7 +29,7 @@
                         Entradas
                     </div>
 
-                    <div class="btn_menu">
+                    <div class="btn_menu" @click="set_modulo('productos')">
                         <div class="icono_boton">
                             <i class="fas fa-boxes"></i>
                         </div>
@@ -71,6 +71,8 @@
 
             <div class="seccion_cuerpo">
 
+                <Productos v-if="modulo == 'productos'" />
+
             </div>
         </div>
     </div>
@@ -78,17 +80,22 @@
 
 <script>
 
-
+import Productos from '@/components/Inventario/Productos/Productos.vue'
 
 export default {
     name: 'VistaInventario',
+    components:{
+        Productos
+    },
     data() {
         return {
-            
+            modulo: ''
         }
     },
     methods: {
-        
+        set_modulo(modulo){
+            this.modulo = modulo
+        }
     },
 }
 </script>

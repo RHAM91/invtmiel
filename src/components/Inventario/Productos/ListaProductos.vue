@@ -1,12 +1,12 @@
 <template>
     <h1>
-        Formulario crear producto
+        Lista productos
     </h1>
 </template>
 
 <script>
 export default {
-    name: 'CrearProducto',
+    name: 'ListaProductos',
     data() {
         return {
             
