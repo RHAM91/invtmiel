@@ -4,7 +4,7 @@
             <b-row>
                 <b-col sm="12" class="mt-2">
                 <label for="">Código</label>
-                <b-form-input type="text" size="sm" v-model="codigo" required></b-form-input>
+                <b-form-input type="text" size="sm" id="codigo_producto" v-model="codigo" required></b-form-input>
                 </b-col>
 
                 <b-col sm="12" class="mt-2">
@@ -43,6 +43,9 @@ export default {
     },
     methods: {
         
+    },
+    mounted() {
+        document.getElementById('codigo_producto').focus()
     },
 }
 </script>
