@@ -38,7 +38,7 @@
                                     1
                                 </td>
                                 <td style="text-align: center;">
-                                    <b-button type="button" variant="warning" style="font-size: 10px;" size="sm" @click="openDialog"><i class="fas fa-info-circle"></i></b-button>
+                                    <b-button type="button" variant="warning" style="font-size: 10px;" size="sm" @click="openDialog({dato: 'Hola mundo!!!!'})"><i class="fas fa-info-circle"></i></b-button>
                                 </td>
                             </tr>
                         </tbody>
@@ -46,12 +46,12 @@
                 </b-col>
             </b-row>
         </b-container>
-        <aside id="default-popup" class="avgrund-popup">
-            Item escondido
+        <aside id="popup-detalle-productos" class="avgrund-popup">
+            <DetalleDeProducto :obj="obj" />
 
-            <button @click="closeDialog">Cerrar</button>
+            <!-- <button @click="closeDialog">Cerrar</button> -->
         </aside>
-        <!-- <button @click="openDialog">Abrir ventana</button> -->
+        
         <div class="avgrund-cover"></div>
     </div>
 </template>
@@ -59,22 +59,24 @@
 <script>
 
 
-
+import DetalleDeProducto from './DetalleProducto.vue'
 
 
 export default {
     name: 'ListaProductos',
+    components:{
+        DetalleDeProducto
+    },
     data() {
         return {
-            buscar: ''
+            buscar: '',
+            obj: {}
         }
     },
     methods: {
-        openDialog() {
-            show( "#default-popup" );
-        },
-        closeDialog() {
-            hide();
+        openDialog(o) {
+            this.obj = o
+            show( "#popup-detalle-productos" );
         }
     },
 }

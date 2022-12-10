@@ -94,4 +94,12 @@ export default {
           margin-left: 7px;
         }
 
+  /* Estilos de la ventana modal avgrund */
+
+  .contenedor_modal_avgrund{
+        width: 100%;
+        height: 100%;
+        border: 1px solid black;
+    }
+
 </style>
