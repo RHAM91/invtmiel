@@ -84,6 +84,7 @@ export default {
 
 <style>
     .conti{
+        border: 1px solid black;
         width: 100%;
         height: calc(100vh - 155px);
         

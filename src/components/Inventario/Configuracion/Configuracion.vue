@@ -40,7 +40,7 @@
                                                 </td>
                                                 <td style="text-align: center;">
                                                     <b-button type="button" style="font-size: 11px;margin-right: 5px;" variant="danger" size="sm" @click="eliminar(item.id)"><i class="far fa-trash-alt"></i></b-button>
-                                                    <b-button type="button" style="font-size: 11px;" variant="info" size="sm"><i class="fas fa-pen"></i></b-button>
+                                                    <b-button type="button" style="font-size: 11px;" variant="info" size="sm" @click="openDialog(item)"><i class="fas fa-pen"></i></b-button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -53,15 +53,29 @@
                 <hr>
             </b-col>
         </b-row>
+
+
+        <aside id="popup-detalle-categorias" class="avgrund-popup" style="margin: -300px 0 0 -300px;">
+            <ModalEditarCategorias :obj="obj" />
+        </aside>
+        
+        <div class="avgrund-cover"></div>
     </b-container>
+    
 </template>
 
 <script>
-import axios from 'axios'
+
 import { mapActions, mapState } from 'vuex'
 import { minix, pregunta } from '@/components/functions/alertas'
+
+import ModalEditarCategorias from './ModalCategorias.vue'
+
 export default {
     name: 'ConfiguracionInventario',
+    components:{
+        ModalEditarCategorias
+    },
     computed: {
         ...mapState(['categorias'])
     },
@@ -69,11 +83,15 @@ export default {
         return {
             sub_categoria: true, // false
 
-
+            obj: '',
             categoria: ''
         }
     },
     methods: {
+        openDialog(o) {
+            this.obj = o
+            show( "#popup-detalle-categorias" );
+        },
         expandir_config(modulo){
             if (modulo == 'categoria') {
                 this.sub_categoria = !this.sub_categoria

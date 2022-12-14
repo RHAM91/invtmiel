@@ -127,4 +127,20 @@ export default {
         border: 1px solid black;
     }
 
+    /* Estilos dentro modal avgrund */
+
+    .modal_contenedor{
+        width: 100%;
+        height: auto;
+    }
+        .cabecera_modal{
+            width: 100%;
+            height: 40px;
+            border-bottom: 1px solid #e6e6e6;
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            padding-right: 10px;
+        }
+
 </style>
