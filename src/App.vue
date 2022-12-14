@@ -4,21 +4,46 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import { io } from 'socket.io-client'
 
 export default {
   name: 'Principal',
+  computed: {
+    ...mapGetters(['ip_api', 'puerto'])
+  },
   data() {
     return {
       
     }
   },
   methods: {
-    
-    ...mapActions(['obtener_preferencias']),
+    async iniciar_conexion_socket(){
+      const SERVER_URL = `http://${this.ip_api}:${this.puerto}`
+      const socket = io(SERVER_URL, { transports : ['websocket'] })
+
+      socket.on("connect", ()=>{
+        socket.on("message:bienvenida", (data)=>{
+          console.log(data)
+        })
+
+        socket.on("action:update",(data)=>{
+          this.actualizar_modulo(data)
+        })
+      })
+
+    },
+    ...mapActions(['obtener_preferencias', 'descargar_datos','actualizar_modulo']),
   },
   mounted() {
+    // TRIGGER
     this.obtener_preferencias()
+    setTimeout(() => { // DEBEN CARGAR PRIMERO LAS PREFERENCIAS Y YA CUANDO ESTÉN DISPONIBLES SE OCUPAN PARA LAS SIGUIENTES FUNCIONES
+
+      this.descargar_datos() // DESCARGA LOS DATOS PREDETERMINADOS AL INICIAR LA APP
+      this.iniciar_conexion_socket() // ACTUALIZA EN TIEMPO REAL LOS CAMBIOS QUE SE PRODUZCAN 
+
+    }, 1000);
   },
 }
 </script>

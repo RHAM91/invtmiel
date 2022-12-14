@@ -57,7 +57,7 @@
                         Inventario
                     </div>
 
-                    <div class="btn_menu">
+                    <div class="btn_menu" @click="set_modulo('configuracion')">
                         <div class="icono_boton">
                             <i class="fas fa-cogs"></i>
                         </div>
@@ -72,7 +72,7 @@
             <div class="seccion_cuerpo">
 
                 <Productos v-if="modulo == 'productos'" />
-
+                <Configuracion v-if="modulo == 'configuracion'" />
             </div>
         </div>
     </div>
@@ -81,11 +81,13 @@
 <script>
 
 import Productos from '@/components/Inventario/Productos/Productos.vue'
+import Configuracion from '@/components/Inventario/Configuracion/Configuracion.vue'
 
 export default {
     name: 'VistaInventario',
     components:{
-        Productos
+        Productos,
+        Configuracion
     },
     data() {
         return {
