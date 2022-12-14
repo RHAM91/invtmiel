@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VuexPersist from 'vuex-persist'
-import { minix } from '../components/functions/alertas'
+import { minix, pregunta } from '../components/functions/alertas'
 
 Vue.use(Vuex)
 
@@ -101,6 +101,38 @@ export default new Vuex.Store({
 
       } catch (error) {
         console.warn(error)
+      }
+    },
+    async borrarData({commit, state, dispatch}, data){
+      try {
+        
+        const config = {
+          method: 'delete',
+          url: `http://${state.preferencias.IP}:${state.preferencias.puerto}/api/${data.api}/${data.id}`,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${state.token_sesion}`
+          }
+        }
+
+        pregunta({titulo: 'Seguro que deseas borrarlo?', texto: 'Está acción no se puede revertir', afirmacion: 'Si, borrarlo!'}, async (i) =>{
+            if (i) {
+
+              const r = await axios(config)
+              
+              if (r.status == 200) {
+                minix({icon: 'success', mensaje: 'BORRADO :)', tiempo: 3000})
+              }else{
+                minix({icon: 'info', mensaje: 'HUBO UN ERROR AL BORRAR', tiempo: 6000})
+                console.log(r.data)
+              }
+                
+            }
+        })
+
+
+      } catch (error) {
+        console.log(error)
       }
     },
 

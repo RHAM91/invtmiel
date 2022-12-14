@@ -20,16 +20,16 @@
                         <b-row>
                             <b-col sm="12" class="mt-3">
                                 <label for="">Nombre categoría</label>
-                                <b-form-input type="text" v-model="categoria" size="sm" @keydown.enter="guardar"></b-form-input>
+                                <b-form-input type="text" v-model="categoria" id="campo_categoria" size="sm" @keydown.enter="guardar"></b-form-input>
                             </b-col>
                             <b-col sm="12" class="mt-3">
                                 <div class="marco_config">
                                     <table class="table table-sm table-striped table-bordered" style="font-size: 11px;">
                                         <thead>
-                                            <th style="width: 80%;">
+                                            <th style="width: 90%;">
                                                 Categoría
                                             </th>
-                                            <th style="width: 20%;text-align: center;">
+                                            <th style="width: 10%;text-align: center;">
                                                 ...
                                             </th>
                                         </thead>
@@ -38,8 +38,9 @@
                                                 <td>
                                                     {{item.attributes.categoria}}
                                                 </td>
-                                                <td>
-
+                                                <td style="text-align: center;">
+                                                    <b-button type="button" style="font-size: 11px;margin-right: 5px;" variant="danger" size="sm" @click="eliminar(item.id)"><i class="far fa-trash-alt"></i></b-button>
+                                                    <b-button type="button" style="font-size: 11px;" variant="info" size="sm"><i class="fas fa-pen"></i></b-button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -58,6 +59,7 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
+import { minix, pregunta } from '@/components/functions/alertas'
 export default {
     name: 'ConfiguracionInventario',
     computed: {
@@ -65,7 +67,7 @@ export default {
     },
     data() {
         return {
-            sub_categoria: false,
+            sub_categoria: true, // false
 
 
             categoria: ''
@@ -78,18 +80,33 @@ export default {
             }
         },
         async guardar(){
+
+            if (this.categoria == '' || this.categoria == null) {
+                minix({icon: 'error', mensaje: 'Debe estar lleno el campo', tiempo: 3000})
+                document.getElementById('campo_categoria').focus()
+            }else{
+                let f = {
+                    api: 'categorias',
+                    formulario: {
+                        categoria: this.categoria.toUpperCase()
+                    }
+                }
+    
+                await this.guardarData(f)
+            }
             
+        },
+        async eliminar(id){
+
             let f = {
                 api: 'categorias',
-                formulario: {
-                    categoria: this.categoria.toUpperCase()
-                }
+                id
             }
 
-            await this.guardarData(f)
-
+            await this.borrarData(f)
+            
         },
-        ...mapActions(['guardarData'])
+        ...mapActions(['guardarData', 'borrarData'])
     },
 }
 </script>
