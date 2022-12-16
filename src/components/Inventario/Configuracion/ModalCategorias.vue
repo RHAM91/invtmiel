@@ -15,16 +15,12 @@
                 </b-col>
 
             </b-row>
-
-            <pre>
-                {{$data}}
-            </pre>
         </b-container>
     </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 export default {
     name: 'ModalCategorias',
     props:['obj'],
