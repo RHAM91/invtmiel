@@ -20,7 +20,7 @@
                         <b-row>
                             <b-col sm="12" class="mt-3">
                                 <label for="">Nombre categoría</label>
-                                <b-form-input type="text" v-model="categoria" id="campo_categoria" size="sm" @keydown.enter="guardar"></b-form-input>
+                                <b-form-input type="text" v-model="categoria" id="campo_categoria" placeholder="Crea una nueva categoría aquí" size="sm" @keydown.enter="guardar"></b-form-input>
                             </b-col>
                             <b-col sm="12" class="mt-3">
                                 <div class="marco_config">
