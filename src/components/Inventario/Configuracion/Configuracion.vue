@@ -56,7 +56,7 @@
 
 
         <aside id="popup-detalle-categorias" class="avgrund-popup" style="margin: -300px 0 0 -300px;">
-            <ModalEditarCategorias :obj="obj" />
+            <ModalEditarCategorias v-if="ventana" :obj="objx" v-on:cerrar="cerrar_modal" />
         </aside>
         
         <div class="avgrund-cover"></div>
@@ -66,7 +66,7 @@
 
 <script>
 
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import { minix, pregunta } from '@/components/functions/alertas'
 
 import ModalEditarCategorias from './ModalCategorias.vue'
@@ -83,14 +83,19 @@ export default {
         return {
             sub_categoria: true, // false
 
-            obj: '',
-            categoria: ''
+            objx: '',
+            categoria: '',
+            ventana: false
         }
     },
     methods: {
         openDialog(o) {
-            this.obj = o
+            this.objx = o
+            this.ventana = true
             show( "#popup-detalle-categorias" );
+        },
+        cerrar_modal(){
+            this.ventana = false
         },
         expandir_config(modulo){
             if (modulo == 'categoria') {
@@ -124,7 +129,8 @@ export default {
             await this.borrarData(f)
             
         },
-        ...mapActions(['guardarData', 'borrarData'])
+        ...mapActions(['guardarData', 'borrarData']),
+        ...mapMutations(['set_ovm'])
     },
 }
 </script>

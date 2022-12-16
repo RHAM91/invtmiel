@@ -135,6 +135,33 @@ export default new Vuex.Store({
         console.log(error)
       }
     },
+    async actualizarData({commit, state, dispatch}, data){
+      try {
+        const config = {
+          method: 'put',
+          url: `http://${state.preferencias.IP}:${state.preferencias.puerto}/api/${data.api}`,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${state.token_sesion}`
+          },
+          data: {
+            data: data.formulario
+          }
+        }
+
+        const r = await axios(config)
+
+        if (r.status == 200) {
+          minix({icon: 'success', mensaje: 'ACTUALIZADO :)', tiempo: 3000})
+        }else{
+          minix({icon: 'info', mensaje: 'HUBO UN ERROR AL ACTUALIZAR', tiempo: 6000})
+          console.log(r.data)
+        }
+
+      } catch (error) {
+        
+      }
+    },
 
     // ACTUALIZA LOS MODULOS QUE VIENEN POR SOCKET
 
