@@ -23,11 +23,13 @@ export default new Vuex.Store({
     token_sesion: '',
     preferencias: {},
     rutas: [
-      {api:'categorias', set: 'set_categorias'}
+      {api:'categorias', set: 'set_categorias'},
+      {api:'bodegas', set: 'set_bodegas'}
     ],
 
     //PRODUCCION
-    categorias: []
+    categorias: [],
+    bodegas: [],
 
   },
   getters: {
@@ -66,6 +68,9 @@ export default new Vuex.Store({
 
     set_categorias(state, data){
       state.categorias = data
+    },
+    set_bodegas(state, data){
+      state.bodegas = data
     }
   },
   actions: {
