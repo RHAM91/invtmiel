@@ -101,11 +101,19 @@ export default new Vuex.Store({
           minix({icon: 'success', mensaje: 'GUARDADO CON EXITO', tiempo: 3000})
         }else{
           minix({icon: 'info', mensaje: 'HUBO UN ERROR AL GUARDAR', tiempo: 6000})
-          console.log(r.data)
         }
 
       } catch (error) {
-        console.warn(error)
+
+        if (error.response.status == 400) {
+          if (error.response.data.error.message == 'This attribute must be unique') {
+            minix({icon: 'error', mensaje: 'Este código ya está en uso', tiempo: 6000})    
+          }
+        }else{
+          minix({icon: 'error', mensaje: error.message, tiempo: 6000})
+          console.warn(error)
+        }
+
       }
     },
     async borrarData({commit, state, dispatch}, data){
