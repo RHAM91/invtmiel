@@ -24,12 +24,14 @@ export default new Vuex.Store({
     preferencias: {},
     rutas: [
       {api:'categorias?sort=categoria', set: 'set_categorias'},
-      {api:'bodegas', set: 'set_bodegas'}
+      {api:'bodegas?sort=bodega', set: 'set_bodegas'},
+      {api:'marcas?sort=marca', set: 'set_marcas'},
     ],
 
     //PRODUCCION
     categorias: [],
     bodegas: [],
+    marcas: [],
 
   },
   getters: {
@@ -71,6 +73,9 @@ export default new Vuex.Store({
     },
     set_bodegas(state, data){
       state.bodegas = data
+    },
+    set_marcas(state, data){
+      state.marcas = data
     }
   },
   actions: {
@@ -253,6 +258,8 @@ export default new Vuex.Store({
        }
         
       } catch (error) {
+        minix({icon: 'error', mensaje: 'Un error ha ocurrido, revisa la consola :)', tiempo: 3000})
+
         console.error(error)
       }
       

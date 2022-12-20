@@ -7,9 +7,13 @@
         <b-container fluid="">
             <b-row>
                 <b-col sm="12" class="mt-3">
-                    <h3>
-                        {{obj.descripcion}}
-                    </h3>
+                    <div class="titulo__">
+                        {{obj.descripcion}} 
+                    </div>
+                    <!-- <h3>
+                        {{obj.descripcion}} 
+                        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                    </h3> -->
                 </b-col>
                 <b-col sm="12" class="">
                     <h4 style="color: #68676c">
@@ -18,7 +22,7 @@
                 </b-col>
                 <b-col sm="12" class="mt-3">
                     <div class="texto_descripcion">
-                        Descripcion: Lorem ipsum dolor sit   amet consectetur adipisicing elit. Et 
+                        Descripcion: {{obj.info_producto}}
                     </div>
                 </b-col>
                 <b-col sm="12" class="mt-3">
@@ -83,6 +87,14 @@ export default {
         width: 100%;
         height: 65px;
         color: #68676c;
+    }
+
+    .titulo__{
+        border: 1px solid black;
+        width: 100%;
+        height: 45px;
+        font-weight: bold;
+        font-size: 32px;
     }
 
     .historial_{

@@ -2,14 +2,25 @@
     <b-container fluid="">
         <form @submit.prevent="guardar">
             <b-row>
-                <b-col sm="12" class="mt-2">
+                <b-col sm="4" class="mt-2">
                     <label for="">Código</label>
                     <b-form-input type="text" size="sm" id="codigo_producto" v-model="codigo" required></b-form-input>
                 </b-col>
 
+                <b-col sm="8" class="mt-2">
+                    <label for="">Nombre del producto</label>
+                    <b-form-input type="text" id="descripcion__" size="sm" v-model="descripcion" required></b-form-input>
+                </b-col>
+
                 <b-col sm="12" class="mt-2">
                     <label for="">Descripción</label>
-                    <b-form-input type="text" size="sm" v-model="descripcion" required></b-form-input>
+                    <b-form-textarea
+                        v-model="info_producto"
+                        placeholder="Escribe algo..."
+                        rows="3"
+                        max-rows="6"
+                        required
+                    ></b-form-textarea>
                 </b-col>
 
                 <b-col sm="12" class="mt-2">
@@ -21,12 +32,20 @@
                 </b-col>
 
                 <b-col sm="12" class="mt-2">
+                    <label for="">Marca</label>
+                    <select class="form-control form-control-sm" v-model="categoria" required>
+                        <option value="">Seleccionar</option>
+                        <option v-for="(item, index) in categorias" :key="index" :value="item.id">{{item.attributes.categoria}}</option>
+                    </select>
+                </b-col>
+
+                <!-- <b-col sm="12" class="mt-2">
                     <label for="">Bodega</label>    
                     <select class="form-control form-control-sm" v-model="bodega" required>
                         <option value="">Seleccionar</option>
                         <option v-for="(item, index) in bodegas" :key="index" :value="item.id">{{item.attributes.bodega}}</option>
                     </select>
-                </b-col>
+                </b-col> -->
 
                 <b-col sm="12" class="mt-2 d-flex flex-row-reverse">
                     <b-button type="submit" variant="success" size="sm">Guardar</b-button>
@@ -37,7 +56,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { minix } from '@/components/functions/alertas'
 import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
     name: 'CrearProducto',
@@ -49,28 +68,38 @@ export default {
         return {
             codigo: '',
             descripcion: '',
+            info_producto: '',
             categoria: '',
-            bodega: ''
+            bodega: '0' // ESTA VARIABLE SE DESHABILITO POR MOTIVO DE QUE NO VA EN EL FORMULARIO
         }
     },
     methods: {
         async guardar(){
-            let f = {
-                api: 'productos',
-                formulario: {
-                            codigo: this.codigo.trim(),
-                            descripcion: this.descripcion.toUpperCase(),
-                            categoria: this.categoria.toString(),
-                            bodega: this.bodega.toString()
+
+            if (this.descripcion.length > 25) {
+                minix({icon: 'info', mensaje: 'El nombre no puede ser mayor a 25 caracteres', tiempo: 6000})
+                document.getElementById('descripcion__').select()
+            }else{
+
+                let f = {
+                    api: 'productos',
+                    formulario: {
+                                codigo: this.codigo.trim(),
+                                descripcion: this.descripcion.toUpperCase(),
+                                info_producto: this.info_producto,
+                                categoria: this.categoria.toString(),
+                                bodega: this.bodega.toString()
+                    }
                 }
+    
+                await this.guardarData(f)
+    
+                this.codigo = ''
+                this.descripcion = ''
+                this.info_producto = ''
+                this.categoria = ''
+                this.bodega = ''
             }
-
-            await this.guardarData(f)
-
-            this.codigo = ''
-            this.descripcion = ''
-            this.categoria = ''
-            this.bodega = ''
 
         },
         ...mapActions(['guardarData'])

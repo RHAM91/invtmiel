@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 const minix = function(data){
     const Toast = Swal.mixin({
         toast: true,
-        position: 'bottom-end',
+        position: 'top-end',
         showConfirmButton: false,
         timer: data.tiempo,
         timerProgressBar: true,

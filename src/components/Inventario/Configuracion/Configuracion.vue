@@ -56,6 +56,8 @@
                     </b-container>
                 </div>
 
+                <hr>
+
                 <!-- BODEGAS -->
 
 
@@ -103,6 +105,54 @@
                     </b-container>
                 </div>
 
+                <!-- MARCAS -->
+
+                <hr>
+
+                <div class="seccion_configurarcion">
+                    <div class="titulo_configuracion">
+                        Marcas
+                    </div>
+                    <b-button v-if="sub_marca == false" type="button" variant="outline-info" size="sm" @click="expandir_config('marca')">Ver</b-button>
+                    <b-button v-if="sub_marca == true" type="button" variant="outline-danger" size="sm" @click="expandir_config('marca')">Ocultar</b-button>
+                </div>
+
+                <div v-if="sub_marca == true" class="contenido_oculto">
+                    <b-container fluid="">
+                        <b-row>
+                            <b-col sm="12" class="mt-3">
+                                <label for="">Nombre bodega</label>
+                                <b-form-input type="text" v-model="marca" id="campo_marca" placeholder="Crea una nueva marca aquí" size="sm" @keydown.enter="guardar_marca"></b-form-input>
+                            </b-col>
+                            <b-col sm="12" class="mt-3">
+                                <div class="marco_config">
+                                    <table class="table table-sm table-striped table-bordered" style="font-size: 11px;">
+                                        <thead>
+                                            <th style="width: 90%;">
+                                                Marca
+                                            </th>
+                                            <th style="width: 10%;text-align: center;">
+                                                ...
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item, index) in marcas" :key="index">
+                                                <td>
+                                                    {{item.attributes.marca}}
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <b-button type="button" style="font-size: 11px;margin-right: 5px;" variant="danger" size="sm" @click="eliminar(item.id, 'marcas')"><i class="far fa-trash-alt"></i></b-button>
+                                                    <b-button type="button" style="font-size: 11px;" variant="info" size="sm" @click="openDialog(item, 'marcas')"><i class="fas fa-pen"></i></b-button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                </div>
+
                 <hr>
             </b-col>
         </b-row>
@@ -125,7 +175,7 @@
 <script>
 
 import { mapActions, mapMutations, mapState } from 'vuex'
-import { minix, pregunta } from '@/components/functions/alertas'
+import { minix } from '@/components/functions/alertas'
 
 import ModalEditarCategorias from './ModalCategorias.vue'
 import ModalEditarBodegas from './ModalBodegas.vue'
@@ -137,19 +187,23 @@ export default {
         ModalEditarBodegas
     },
     computed: {
-        ...mapState(['categorias', 'bodegas'])
+        ...mapState(['categorias', 'bodegas', 'marcas'])
     },
     data() {
         return {
             sub_categoria: false, // false
             sub_bodega: false, // false
+            sub_marca: false, // false
 
-            obj_categoria: '',
+            obj_categoria: {},
             obj_bodega: {},
+            obj_marca: {},
             categoria: '',
             bodega: '',
+            marca: '',
             ventana_categoria: false,
-            ventana_bodega: false
+            ventana_bodega: false,
+            ventana_marca: false
         }
     },
     methods: {
@@ -178,6 +232,9 @@ export default {
                 case 'bodegas':
                     this.ventana_bodega = false
                     break
+                case 'marcas':
+                    this.ventana_marca = false
+                    break
                 default:
                     console.log('No se encuentra conicidencia')
                     break;
@@ -191,6 +248,9 @@ export default {
                     break;
                 case 'bodega':
                     this.sub_bodega = !this.sub_bodega
+                    break;
+                case 'marca':
+                    this.sub_marca = !this.sub_marca
                     break;
                 default:
                     console.log('No se encuentran coincidencias')
@@ -233,13 +293,30 @@ export default {
             }
             
         },
+        async guardar_marca(){
+
+            if (this.marca == '' || this.marca == null) {
+                minix({icon: 'error', mensaje: 'Debe estar lleno el campo', tiempo: 3000})
+                document.getElementById('campo_marca').focus()
+            }else{
+                let f = {
+                    api: 'marcas',
+                    formulario: {
+                        marca: this.marca.toUpperCase().trim()
+                    }
+                }
+    
+                await this.guardarData(f)
+                this.marca = ''
+            }
+            
+        },
         async eliminar(id, modulo){
 
             await this.borrarData({api: modulo, id})
             
         },
-        ...mapActions(['guardarData', 'borrarData']),
-        ...mapMutations(['set_ovm'])
+        ...mapActions(['guardarData', 'borrarData'])
     },
 }
 </script>
