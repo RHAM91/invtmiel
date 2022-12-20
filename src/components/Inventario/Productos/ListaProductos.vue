@@ -33,8 +33,8 @@
                                     {{item.descripcion}}
                                 </td>
                                 <td style="text-align: center;">
-                                    <b-button type="button" variant="warning" style="font-size: 10px;margin-right: 5px;" size="sm" @click="openDialog(item)"><i class="fas fa-info-circle"></i></b-button>
-                                    <b-button type="button" variant="primary" style="font-size: 10px;" size="sm" @click="openDialog(item)"><i class="fas fa-pen"></i></b-button>
+                                    <b-button type="button" variant="warning" style="font-size: 10px;margin-right: 5px;" size="sm" @click="openDialog(item, 'detalle')"><i class="fas fa-info-circle"></i></b-button>
+                                    <b-button type="button" variant="primary" style="font-size: 10px;" size="sm" @click="openDialog(item, 'edicion')"><i class="fas fa-pen"></i></b-button>
                                 </td>
                             </tr>
                         </tbody>
@@ -43,7 +43,8 @@
             </b-row>
         </b-container>
         <aside id="popup-detalle-productos" class="avgrund-popup">
-            <DetalleDeProducto v-if="modal_detalle" :obj="obj" v-on:cerrar="cerrarModal" />
+            <DetalleDeProducto v-if="modal_detalle" :obj="obj" v-on:cerrar="cerrarModal('detalle')" />
+            <EdicionProducto v-if="modal_edicion_producto" :obj="obj" v-on:cerrar="cerrarModal('edicion'), buscar_()" />
         </aside>
         
         <div class="avgrund-cover"></div>
@@ -55,29 +56,55 @@ import { mapActions } from 'vuex'
 
 
 import DetalleDeProducto from './DetalleProducto.vue'
+import EdicionProducto from './EdicionProducto.vue'
 
 
 export default {
     name: 'ListaProductos',
     components:{
-        DetalleDeProducto
+        DetalleDeProducto,
+        EdicionProducto
     },
     data() {
         return {
             obj: {},
             criterio_busqueda: '',
             lista: [],
-            modal_detalle: false
+            modal_detalle: false,
+            modal_edicion_producto: false
         }
     },
     methods: {
-        openDialog(o) {
-            this.obj = o
-            this.modal_detalle = true
-            show( "#popup-detalle-productos" );
+        openDialog(o, modulo) {
+
+            switch (modulo) {
+                case 'detalle':
+                    this.obj = o
+                    this.modal_detalle = true
+                    show( "#popup-detalle-productos" );
+                    break;
+                case 'edicion':
+                    this.obj = o
+                    this.modal_edicion_producto = true
+                    show( "#popup-detalle-productos" );
+                    break;
+            
+                default:
+                    break;
+            }
+
         },
-        cerrarModal(){
-            this.modal_detalle = false
+        cerrarModal(modulo){
+            switch (modulo) {
+                case 'detalle':
+                    this.modal_detalle = false
+                    break;
+                case 'edicion':
+                    this.modal_edicion_producto = false
+                    break;                    
+                default:
+                    break;
+            }
         },
         async buscar_(){
 
