@@ -43,7 +43,7 @@
                         Clientes
                     </div>
 
-                    <div class="btn_menu">
+                    <div class="btn_menu" @click="set_modulo('proveedores')">
                         <div class="icono_boton">
                             <i class="fas fa-user-tie"></i>
                         </div>
@@ -73,6 +73,7 @@
 
                 <Productos v-if="modulo == 'productos'" />
                 <Configuracion v-if="modulo == 'configuracion'" />
+                <Proveedores v-if="modulo == 'proveedores'" />
             </div>
         </div>
     </div>
@@ -82,12 +83,14 @@
 
 import Productos from '@/components/Inventario/Productos/Productos.vue'
 import Configuracion from '@/components/Inventario/Configuracion/Configuracion.vue'
+import Proveedores from '@/components/Inventario/Proveedores/Proveedores.vue'
 
 export default {
     name: 'VistaInventario',
     components:{
         Productos,
-        Configuracion
+        Configuracion,
+        Proveedores
     },
     data() {
         return {
