@@ -8,7 +8,7 @@
             <form @submit.prevent="actualizar">
                 <b-row>
                     <b-col sm="12" class="mt-3">
-                        <div class="titulo__">
+                        <div class="titulo__" style="font-size: 22px;">
                             {{obj.attributes.proveedor}} 
                         </div>
                     </b-col>
