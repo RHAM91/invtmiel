@@ -26,12 +26,14 @@ export default new Vuex.Store({
       {api:'categorias?sort=categoria', set: 'set_categorias'},
       {api:'bodegas?sort=bodega', set: 'set_bodegas'},
       {api:'marcas?sort=marca', set: 'set_marcas'},
+      {api:'proveedores?sort=proveedor', set: 'set_proveedores'},
     ],
 
     //PRODUCCION
     categorias: [],
     bodegas: [],
     marcas: [],
+    proveedores:[],
 
   },
   getters: {
@@ -76,6 +78,9 @@ export default new Vuex.Store({
     },
     set_marcas(state, data){
       state.marcas = data
+    },
+    set_proveedores(state, data){
+      state.proveedores = data
     }
   },
   actions: {
