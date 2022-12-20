@@ -59,13 +59,18 @@ export default {
                 api: 'productos',
                 formulario: {
                             codigo: this.codigo.trim(),
-                            descripcion: this.descripcion,
+                            descripcion: this.descripcion.toUpperCase(),
                             categoria: this.categoria.toString(),
                             bodega: this.bodega.toString()
                 }
             }
 
             await this.guardarData(f)
+
+            this.codigo = ''
+            this.descripcion = ''
+            this.categoria = ''
+            this.bodega = ''
 
         },
         ...mapActions(['guardarData'])

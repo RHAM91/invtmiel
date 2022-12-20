@@ -23,7 +23,7 @@ export default new Vuex.Store({
     token_sesion: '',
     preferencias: {},
     rutas: [
-      {api:'categorias', set: 'set_categorias'},
+      {api:'categorias?sort=categoria', set: 'set_categorias'},
       {api:'bodegas', set: 'set_bodegas'}
     ],
 
@@ -114,6 +114,38 @@ export default new Vuex.Store({
           console.warn(error)
         }
 
+      }
+    },
+    async obtenerData({commit, state, dispatch}, data){
+      try {
+        const config = {
+          method: 'get',
+          url: `http://${state.preferencias.IP}:${state.preferencias.puerto}/api/${data.api}`,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${state.token_sesion}`
+          }
+        }
+
+        let r = await axios(config)
+        
+        if (r.status == 200) {
+
+          if (r.data.length == 0) {
+            
+            minix({icon: 'info', mensaje: 'No hay registros', tiempo: 6000})
+            return []
+
+          }else{
+            return r.data
+          }
+
+        }else{
+          return []
+        }
+
+      } catch (error) {
+        console.log(error)
       }
     },
     async borrarData({commit, state, dispatch}, data){
