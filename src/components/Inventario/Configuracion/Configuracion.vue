@@ -161,6 +161,7 @@
         <aside id="popup-detalle-categorias" class="avgrund-popup" style="margin: -300px 0 0 -300px;">
             <ModalEditarCategorias v-if="ventana_categoria" :obj="obj_categoria" v-on:cerrar="cerrar_modal('categorias')" />
             <ModalEditarBodegas v-if="ventana_bodega" :obj="obj_bodega" v-on:cerrar="cerrar_modal('bodegas')" />
+            <ModalEditarMarcas v-if="ventana_marca" :obj="obj_marca" v-on:cerrar="cerrar_modal('marcas')" />
         </aside>
 
         <!-- <aside id="popup-detalle-bodegas" class="avgrund-popup" style="margin: -300px 0 0 -300px;">
@@ -179,12 +180,14 @@ import { minix } from '@/components/functions/alertas'
 
 import ModalEditarCategorias from './ModalCategorias.vue'
 import ModalEditarBodegas from './ModalBodegas.vue'
+import ModalEditarMarcas from './ModalMarcas.vue'
 
 export default {
     name: 'ConfiguracionInventario',
     components:{
         ModalEditarCategorias,
-        ModalEditarBodegas
+        ModalEditarBodegas,
+        ModalEditarMarcas
     },
     computed: {
         ...mapState(['categorias', 'bodegas', 'marcas'])
@@ -217,6 +220,11 @@ export default {
                 case 'bodegas':
                     this.obj_bodega = o
                     this.ventana_bodega = true
+                    show( "#popup-detalle-categorias" );
+                    break;
+                case 'marcas':
+                    this.obj_marca = o
+                    this.ventana_marca = true
                     show( "#popup-detalle-categorias" );
                     break;
                 default:

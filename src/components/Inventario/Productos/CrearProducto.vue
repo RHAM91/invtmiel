@@ -33,19 +33,11 @@
 
                 <b-col sm="12" class="mt-2">
                     <label for="">Marca</label>
-                    <select class="form-control form-control-sm" v-model="categoria" required>
+                    <select class="form-control form-control-sm" v-model="marca" required>
                         <option value="">Seleccionar</option>
-                        <option v-for="(item, index) in categorias" :key="index" :value="item.id">{{item.attributes.categoria}}</option>
+                        <option v-for="(item, index) in marcas" :key="index" :value="item.id">{{item.attributes.marca}}</option>
                     </select>
                 </b-col>
-
-                <!-- <b-col sm="12" class="mt-2">
-                    <label for="">Bodega</label>    
-                    <select class="form-control form-control-sm" v-model="bodega" required>
-                        <option value="">Seleccionar</option>
-                        <option v-for="(item, index) in bodegas" :key="index" :value="item.id">{{item.attributes.bodega}}</option>
-                    </select>
-                </b-col> -->
 
                 <b-col sm="12" class="mt-2 d-flex flex-row-reverse">
                     <b-button type="submit" variant="success" size="sm">Guardar</b-button>
@@ -61,7 +53,7 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
     name: 'CrearProducto',
     computed: {
-        ...mapState(['categorias', 'bodegas']),
+        ...mapState(['categorias', 'bodegas', 'marcas']),
         ...mapGetters(['sesion_token_formateado'])
     },
     data() {
@@ -70,7 +62,7 @@ export default {
             descripcion: '',
             info_producto: '',
             categoria: '',
-            bodega: '0' // ESTA VARIABLE SE DESHABILITO POR MOTIVO DE QUE NO VA EN EL FORMULARIO
+            marca: ''
         }
     },
     methods: {
@@ -88,7 +80,7 @@ export default {
                                 descripcion: this.descripcion.toUpperCase(),
                                 info_producto: this.info_producto,
                                 categoria: this.categoria.toString(),
-                                bodega: this.bodega.toString()
+                                marca: this.marca.toString()
                     }
                 }
     
@@ -98,7 +90,7 @@ export default {
                 this.descripcion = ''
                 this.info_producto = ''
                 this.categoria = ''
-                this.bodega = ''
+                this.marca = ''
             }
 
         },

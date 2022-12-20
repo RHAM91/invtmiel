@@ -16,13 +16,11 @@
                             <th style="width: 15%;">
                                 Código
                             </th>
-                            <th style="width: 70%;">
+                            <th style="width: 75%;">
                                 Descripción
                             </th>
+                            
                             <th style="width: 10%;text-align: center;">
-                                Bodega
-                            </th>
-                            <th style="width: 5%;text-align: center;">
                                 ..
                             </th>
                         </thead>
@@ -35,10 +33,8 @@
                                     {{item.descripcion}}
                                 </td>
                                 <td style="text-align: center;">
-                                    {{item.bodega}}
-                                </td>
-                                <td style="text-align: center;">
-                                    <b-button type="button" variant="warning" style="font-size: 10px;" size="sm" @click="openDialog(item)"><i class="fas fa-info-circle"></i></b-button>
+                                    <b-button type="button" variant="warning" style="font-size: 10px;margin-right: 5px;" size="sm" @click="openDialog(item)"><i class="fas fa-info-circle"></i></b-button>
+                                    <b-button type="button" variant="primary" style="font-size: 10px;" size="sm" @click="openDialog(item)"><i class="fas fa-pen"></i></b-button>
                                 </td>
                             </tr>
                         </tbody>

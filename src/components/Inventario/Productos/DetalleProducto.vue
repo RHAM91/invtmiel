@@ -10,10 +10,6 @@
                     <div class="titulo__">
                         {{obj.descripcion}} 
                     </div>
-                    <!-- <h3>
-                        {{obj.descripcion}} 
-                        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                    </h3> -->
                 </b-col>
                 <b-col sm="12" class="">
                     <h4 style="color: #68676c">
@@ -90,7 +86,6 @@ export default {
     }
 
     .titulo__{
-        border: 1px solid black;
         width: 100%;
         height: 45px;
         font-weight: bold;
