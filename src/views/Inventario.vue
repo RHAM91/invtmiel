@@ -36,12 +36,12 @@
                         Productos
                     </div>
 
-                    <div class="btn_menu">
+                    <!-- <div class="btn_menu">
                         <div class="icono_boton">
                             <i class="fas fa-users"></i>
                         </div>
                         Clientes
-                    </div>
+                    </div> -->
 
                     <div class="btn_menu" @click="set_modulo('proveedores')">
                         <div class="icono_boton">
