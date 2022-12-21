@@ -22,7 +22,7 @@
                         Salidas
                     </div>
 
-                    <div class="btn_menu">
+                    <div class="btn_menu" @click="set_modulo('entradas')">
                         <div class="icono_boton">
                             <i class="fas fa-dolly-flatbed"></i>
                         </div>
@@ -74,6 +74,8 @@
                 <Productos v-if="modulo == 'productos'" />
                 <Configuracion v-if="modulo == 'configuracion'" />
                 <Proveedores v-if="modulo == 'proveedores'" />
+                <Entradas v-if="modulo == 'entradas'" />
+
             </div>
         </div>
     </div>
@@ -84,13 +86,15 @@
 import Productos from '@/components/Inventario/Productos/Productos.vue'
 import Configuracion from '@/components/Inventario/Configuracion/Configuracion.vue'
 import Proveedores from '@/components/Inventario/Proveedores/Proveedores.vue'
+import Entradas from '@/components/Inventario/Entradas/Entradas.vue'
 
 export default {
     name: 'VistaInventario',
     components:{
         Productos,
         Configuracion,
-        Proveedores
+        Proveedores,
+        Entradas
     },
     data() {
         return {
