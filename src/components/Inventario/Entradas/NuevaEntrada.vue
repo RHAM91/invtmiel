@@ -12,7 +12,7 @@
             </b-col>
             <b-col sm="4" class="mt-2">
                 <label for="">Código proveedor</label>
-                <b-form-input type="text" v-model="codigo_proveedor" size="sm"></b-form-input>
+                <b-form-input type="text" placeholder="F2 para buscar" v-model="codigo_proveedor" size="sm" @keydown.113="openDialog"></b-form-input>
             </b-col>
             <b-col sm="8" class="mt-2">
                 <label for="">Proveedor</label>
@@ -111,6 +111,12 @@
 
         <ModalBusquedaProducto v-if="modal" v-on:cerrar="cerrar_modal" v-on:seleccion="setear_seleccion" />
 
+        <aside id="popup-detalle-proveedores" class="avgrund-popup">
+            <ModalBusquedaProveedores v-if="modal_proveedores" v-on:cerrar="cerrarDialogo" v-on:seleccionado="imprimirSeleccion" />
+        </aside>
+        
+        <div class="avgrund-cover"></div>
+
     </b-container>
 </template>
 
@@ -121,15 +127,18 @@ import { mapActions } from 'vuex'
 import { minix } from '@/components/functions/alertas'
 
 import ModalBusquedaProducto from './ModalBusqueda.vue'
+import ModalBusquedaProveedores from './ModalBusquedaProveedores.vue'
 
 export default {
     name: 'NuevaEntrada',
     components:{
-        ModalBusquedaProducto
+        ModalBusquedaProducto,
+        ModalBusquedaProveedores
     },
     data() {
         return {
             modal: false,
+            modal_proveedores: false,
             bolsa: [],
 
             no_documento: '',
@@ -145,6 +154,18 @@ export default {
         }
     },
     methods: {
+        openDialog() {
+            this.modal_proveedores = true
+            show( "#popup-detalle-proveedores" );
+        },
+        cerrarDialogo(){
+            this.modal_proveedores = false
+        },
+        imprimirSeleccion(i){
+            this.codigo_proveedor = i.attributes.nit
+            this.nombre_proveedor = i.attributes.proveedor
+            document.getElementById('codigo_producto').focus()
+        },
         agregar_elemento(){
 
             if (this.codigo_producto == '' || this.codigo_producto == null) {

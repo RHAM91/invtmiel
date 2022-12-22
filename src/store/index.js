@@ -14,6 +14,16 @@ const vuexPersist = new VuexPersist({
   }) 
 })
 
+function filtrar_acentos(input){
+  var acentos = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç";
+  var original = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc";
+  for (var i = 0; i < acentos.length; i++) {
+      input = input.replace(acentos.charAt(i), original.charAt(i)).toLowerCase();
+  };
+  return input;
+}
+
+
 
 export default new Vuex.Store({
   state: {
@@ -34,6 +44,9 @@ export default new Vuex.Store({
     bodegas: [],
     marcas: [],
     proveedores:[],
+    filtros:{
+      filtro_proveedores: ''
+    }
 
   },
   getters: {
@@ -57,6 +70,19 @@ export default new Vuex.Store({
       }
 
       return token_formateado
+    },
+    filtro_proveedores_(state){
+      if(state.filtros.filtro_proveedores.length > 2){
+        // let filtro = state.proveedores.filter(proveedor => proveedor.attributes.proveedor.includes(state.filtros.filtro_proveedores.toUpperCase()))
+
+        var parametro = state.filtros.filtro_proveedores
+        var x = parametro.split(' ')
+        var regex = "^(?=.*\\b" + x.join("\\b)(?=.*\\b") + "\\b)"
+
+        var filtro = state.proveedores.filter(proveedor => filtrar_acentos(proveedor.attributes.proveedor).match(regex))
+
+        return filtro
+      }
     }
   },
   mutations: {
@@ -81,6 +107,9 @@ export default new Vuex.Store({
     },
     set_proveedores(state, data){
       state.proveedores = data
+    },
+    set_filtro_proveedores(state, data){
+      state.filtros.filtro_proveedores = data
     }
   },
   actions: {
