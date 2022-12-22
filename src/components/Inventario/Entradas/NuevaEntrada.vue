@@ -26,7 +26,7 @@
 
             <b-col sm="2" class="mt-2">
                 <label for="">Código</label>
-                <b-form-input type="text" id="codigo_producto" placeholder="F2 (buscar)" @keydown.113="abrir_modal" v-model="codigo_producto" size="sm"></b-form-input>
+                <b-form-input type="text" id="codigo_producto" placeholder="F2 (buscar)" @keydown.113="abrir_modal" @keydown.tab="buscar_producto" v-model="codigo_producto" size="sm"></b-form-input>
             </b-col>
 
             <b-col sm="5" class="mt-2">
@@ -241,7 +241,11 @@ export default {
 
             this.contador = cont
         },
-        ...mapActions(['guardarData'])
+        async buscar_producto(){
+            let recv = await this.obtenerData({api: `productos/?filters[codigo][$eq]=${this.codigo_producto}`})
+            this.nombre_producto = recv.data[0].attributes.descripcion
+        },
+        ...mapActions(['guardarData', 'obtenerData'])
     },
 }
 </script>
