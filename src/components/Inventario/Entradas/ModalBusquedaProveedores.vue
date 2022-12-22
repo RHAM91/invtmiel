@@ -7,8 +7,13 @@
             <b-container fluid="">
                 <b-row>
                     <b-col sm="12" class="mt-3">
-                        <label for="">Buscar</label>
-                        <b-form-input type="text" id="campo_busqueda_proveedores" v-model="search" placeholder="Escribe algo para buscar" size="sm"></b-form-input>
+                        <b-input-group size="sm">
+                            <b-input-group-prepend is-text>
+                                <b-icon icon="search"></b-icon>
+                            </b-input-group-prepend>
+                            <b-form-input type="search" v-model="search" id="campo_busqueda_proveedores" size="sm" placeholder="Buscar" autocomplete="off"></b-form-input>
+                        </b-input-group>
+
                     </b-col>
                     <b-col sm="12" class="mt-3">
                         <table class="table table-sm table-striped table-bordered" style="font-size: 11px;">

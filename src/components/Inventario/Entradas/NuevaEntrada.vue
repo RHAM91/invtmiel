@@ -12,7 +12,7 @@
             </b-col>
             <b-col sm="4" class="mt-2">
                 <label for="">Código proveedor</label>
-                <b-form-input type="text" placeholder="F2 para buscar" v-model="codigo_proveedor" size="sm" @keydown.113="openDialog"></b-form-input>
+                <b-form-input type="text" id="codigo_proveedor__" placeholder="F2 para buscar" v-model="codigo_proveedor" size="sm" @keydown.113="openDialog" @keydown.tab="buscar_proveedor_por_nit"></b-form-input>
             </b-col>
             <b-col sm="8" class="mt-2">
                 <label for="">Proveedor</label>
@@ -123,7 +123,7 @@
 <script>
 
 import moment from 'moment'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import { minix } from '@/components/functions/alertas'
 
 import ModalBusquedaProducto from './ModalBusqueda.vue'
@@ -134,6 +134,9 @@ export default {
     components:{
         ModalBusquedaProducto,
         ModalBusquedaProveedores
+    },
+    computed: {
+        ...mapState(['proveedores'])
     },
     data() {
         return {
@@ -165,6 +168,16 @@ export default {
             this.codigo_proveedor = i.attributes.nit
             this.nombre_proveedor = i.attributes.proveedor
             document.getElementById('codigo_producto').focus()
+        },
+        buscar_proveedor_por_nit(){
+            let f = this.proveedores.filter(proveedor => proveedor.attributes.nit == this.codigo_proveedor)
+            if (f.length == 0) {
+                minix({icon: 'error', mensaje: 'No existe proveedor con este NIT', tiempo: 3000})
+                this.nombre_proveedor = ''
+            }else{
+                this.nombre_proveedor = f[0].attributes.proveedor
+            }
+
         },
         agregar_elemento(){
 
