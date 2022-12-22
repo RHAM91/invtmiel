@@ -1,113 +1,116 @@
 <template>
     <b-container fluid="">
-        
-        <b-row>
-            <b-col sm="8" class="mt-2">
-                <label for="">No. Documento</label>
-                <b-form-input type="text" v-model="no_documento" size="sm"></b-form-input>
-            </b-col>
-            <b-col sm="4" class="mt-2">
-                <label for="">Fecha documento</label>
-                <b-form-input type="date" v-model="fecha_hoy" size="sm"></b-form-input>
-            </b-col>
-            <b-col sm="4" class="mt-2">
-                <label for="">Código proveedor</label>
-                <b-form-input type="text" id="codigo_proveedor__" placeholder="F2 para buscar" v-model="codigo_proveedor" size="sm" @keydown.113="openDialog" @keydown.tab="buscar_proveedor_por_nit"></b-form-input>
-            </b-col>
-            <b-col sm="8" class="mt-2">
-                <label for="">Proveedor</label>
-                <b-form-input type="text" readonly v-model="nombre_proveedor" size="sm"></b-form-input>
-            </b-col>
+        <form @submit.prevent="guardar">
+            <b-row>
+                <b-col sm="8" class="mt-2">
+                    <label for="">No. Documento</label>
+                    <b-form-input type="text" v-model="no_documento" required size="sm"></b-form-input>
+                </b-col>
+                <b-col sm="4" class="mt-2">
+                    <label for="">Fecha documento</label>
+                    <b-form-input type="date" v-model="fecha_hoy" required size="sm"></b-form-input>
+                </b-col>
+                <b-col sm="4" class="mt-2">
+                    <label for="">Código proveedor</label>
+                    <b-form-input type="text" id="codigo_proveedor__" required placeholder="F2 para buscar" v-model="codigo_proveedor" size="sm" @keydown.113="openDialog" @keydown.tab="buscar_proveedor_por_nit"></b-form-input>
+                </b-col>
+                <b-col sm="8" class="mt-2">
+                    <label for="">Proveedor</label>
+                    <b-form-input type="text" readonly v-model="nombre_proveedor" size="sm"></b-form-input>
+                </b-col>
 
 
-            <b-col sm="12" class="mt-1">
-                <hr>
-            </b-col>
+                <b-col sm="12" class="mt-1">
+                    <hr>
+                </b-col>
 
-            <b-col sm="2" class="mt-2">
-                <label for="">Código</label>
-                <b-form-input type="text" id="codigo_producto" placeholder="F2 (buscar)" @keydown.113="abrir_modal" @keydown.tab="buscar_producto" v-model="codigo_producto" size="sm"></b-form-input>
-            </b-col>
+                <b-col sm="2" class="mt-2">
+                    <label for="">Código</label>
+                    <b-form-input type="text" id="codigo_producto" placeholder="F2 (buscar)" @keydown.113="abrir_modal" @keydown.tab="buscar_producto" v-model="codigo_producto" size="sm"></b-form-input>
+                </b-col>
 
-            <b-col sm="5" class="mt-2">
-                <label for="">Producto</label>
-                <b-form-input type="text" readonly v-model="nombre_producto" size="sm"></b-form-input>
-            </b-col>
+                <b-col sm="5" class="mt-2">
+                    <label for="">Producto</label>
+                    <b-form-input type="text" readonly v-model="nombre_producto" size="sm"></b-form-input>
+                </b-col>
 
-            <b-col sm="2" class="mt-2">
-                <label for="">Precio compra</label>
-                <b-form-input type="number" id="precio_compra" step="0.01" v-model="precio_compra" size="sm"></b-form-input>
-            </b-col>
+                <b-col sm="2" class="mt-2">
+                    <label for="">Precio compra</label>
+                    <b-form-input type="number" id="precio_compra" step="0.01" v-model="precio_compra" size="sm"></b-form-input>
+                </b-col>
 
-            <b-col sm="2" class="mt-2">
-                <label for="">Cantidad</label>
-                <b-form-input type="number" v-model="cantidad" id="cantidad__" size="sm"></b-form-input>
-            </b-col>
+                <b-col sm="2" class="mt-2">
+                    <label for="">Cantidad</label>
+                    <b-form-input type="number" v-model="cantidad" id="cantidad__" size="sm"></b-form-input>
+                </b-col>
 
-            <b-col sm="1" class="mt-4">
-                <b-button type="button" block variant="primary" style="margin-top: 15px;" size="sm" @click="agregar_elemento"><i class="fas fa-plus"></i></b-button>
-            </b-col>
+                <b-col sm="1" class="mt-4">
+                    <b-button type="button" block variant="primary" style="margin-top: 15px;" size="sm" @click="agregar_elemento"><i class="fas fa-plus"></i></b-button>
+                </b-col>
 
-            <b-col sm="12" class="mt-2">
-                <div class="lista_productos_adds">
-                    <table class="table table-sm table-striped table-bordered" style="font-size: 10px;">
-                        <thead>
-                            <tr>
-                                <th style="width: 15%;text-align: center;">
-                                    Código
-                                </th>
-                                <th style="width: 35%;">
-                                    Nombre
-                                </th>
-                                <th style="width: 15%;text-align: center;">
-                                    Precio unitario
-                                </th>
-                                <th style="width: 15%;text-align: center;">
-                                    Cantidad
-                                </th>
-                                <th style="width: 15%;text-align: center;">
-                                    Sub total
-                                </th>
-                                <th style="width: 5%;text-align: center;">
-                                    ...
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in bolsa" :key="index">
-                                <td style="text-align: center;">
-                                    {{item.codigo}}
-                                </td>
-                                <td>
-                                    {{item.nombre}}
-                                </td>
-                                <td style="text-align: center;">
-                                    Q{{item.precio_unitario}}
-                                </td>
-                                <td style="text-align: center;">
-                                    {{item.cantidad}}
-                                </td>
-                                <td style="text-align: center;">
-                                    Q{{item.sub_total}}
-                                </td>
-                                <td>
-                                    <b-button type="button" variant="danger" style="font-size: 9px;text-align: center;" size="sm" @click="eliminar_elementos(index)"><i class="fas fa-trash-alt"></i></b-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>                
-            </b-col>
-            <b-col sm="6" class="mt-3">
-                <div class="pie_formulario_">
-                    Total: Q{{contador}}
-                </div>
-            </b-col>
-            <b-col sm="6" class="mt-3 d-flex flex-row-reverse">
-                <b-button type="button" variant="success" size="sm">Guardar</b-button>
-            </b-col>
+                <b-col sm="12" class="mt-2">
+                    <div class="lista_productos_adds">
+                        <table class="table table-sm table-striped table-bordered" style="font-size: 10px;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 15%;text-align: center;">
+                                        Código
+                                    </th>
+                                    <th style="width: 35%;">
+                                        Nombre
+                                    </th>
+                                    <th style="width: 15%;text-align: center;">
+                                        Precio unitario
+                                    </th>
+                                    <th style="width: 15%;text-align: center;">
+                                        Cantidad
+                                    </th>
+                                    <th style="width: 15%;text-align: center;">
+                                        Sub total
+                                    </th>
+                                    <th style="width: 5%;text-align: center;">
+                                        ...
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in bolsa" :key="index">
+                                    <td style="text-align: center;">
+                                        {{item.codigo}}
+                                    </td>
+                                    <td>
+                                        {{item.nombre}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        Q{{item.precio_unitario}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{item.cantidad}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        Q{{item.sub_total}}
+                                    </td>
+                                    <td>
+                                        <b-button type="button" variant="danger" style="font-size: 9px;text-align: center;" size="sm" @click="eliminar_elementos(index)"><i class="fas fa-trash-alt"></i></b-button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>                
+                </b-col>
+                <b-col sm="6" class="mt-3">
+                    <div class="pie_formulario_">
+                        Total: Q{{contador}}
+                    </div>
+                </b-col>
+                <b-col sm="6" class="mt-3 d-flex flex-row-reverse">
+                    <b-button type="submit" variant="success" size="sm">Guardar</b-button>
+                </b-col>
 
-        </b-row>
+            </b-row>
+
+
+        </form>
 
         <ModalBusquedaProducto v-if="modal" v-on:cerrar="cerrar_modal" v-on:seleccion="setear_seleccion" />
 
@@ -244,6 +247,39 @@ export default {
         async buscar_producto(){
             let recv = await this.obtenerData({api: `productos/?filters[codigo][$eq]=${this.codigo_producto}`})
             this.nombre_producto = recv.data[0].attributes.descripcion
+        },
+        async guardar(){
+
+            if (this.bolsa.length == 0) {
+                minix({icon: 'error', mensaje: 'Debes agregar artículos', tiempo: 3000})
+            }else{
+                let f ={
+                    api: 'movimientos/m/registro',
+                    formulario:{
+                        no_documento: this.no_documento,
+                        codigo_proveedor: this.codigo_proveedor,
+                        nombre_proveedor: this.nombre_proveedor,
+                        tipo_movimiento: 'ENTRADA',
+                        total_documento: this.contador,
+                        fecha_documento: this.fecha_hoy,
+                        bolsa: this.bolsa
+                    }
+                }
+    
+                await this.guardarData(f)
+    
+                this.no_documento = ''
+                this.codigo_proveedor = ''
+                this.nombre_proveedor = ''
+                this.codigo_producto = ''
+                this.nombre_producto = ''
+                this.precio_compra = 0
+                this.cantidad = 0
+                this.bolsa = []
+                this.contador = 0
+            }
+
+
         },
         ...mapActions(['guardarData', 'obtenerData'])
     },
