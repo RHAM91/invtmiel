@@ -5,13 +5,13 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 import { autoUpdater } from 'electron-updater'
-import sql from 'sqlite3'
+// import sql from 'sqlite3'
 import path from 'path'
 
 
-const dbPath = path.join(app.getPath('userData'), 'dbi.db')
-let preferencias_
-let token_sesion_
+// const dbPath = path.join(app.getPath('userData'), 'dbi.db')
+// let preferencias_
+// let token_sesion_
 
 let win
 let actualizacion
@@ -127,28 +127,35 @@ ipcMain.on('ok_update', (event) =>{
 
 // --> EVENTO CONECTAR CON BASE DE DATOS SQLITE3
 
-let dbs = new sql.Database(dbPath, sql.OPEN_READWRITE, (err) =>{
-  if(err && err.code == "SQLITE_CANTOPEN"){
-    console.log('NO SE PUEDE ABRIR DB')
-    return
-  }else if(err){
-      console.log("Getting error " + err)
-      exit(1)
-  }
-})
+// let dbs = new sql.Database(dbPath, sql.OPEN_READWRITE, (err) =>{
+//   if(err && err.code == "SQLITE_CANTOPEN"){
+//     console.log('NO SE PUEDE ABRIR DB')
+//     return
+//   }else if(err){
+//       console.log("Getting error " + err)
+//       exit(1)
+//   }
+// })
 
 
 // --> EVENTO QUE RECIBE LAS PREFERENCIAS DE LA DB
-dbs.all('select * from configuracion', (err, rows)=>{
-  preferencias_ = rows[0]
-})
+// dbs.all('select * from configuracion', (err, rows)=>{
+//   preferencias_ = rows[0]
+// })
 
 
 
 // --> RETORNA LOS DATOS
 
 ipcMain.handle("get/preferencias", async (event, args)=>{
-  return preferencias_
+
+  let r = {
+    IP: '64.227.1.112',
+    puerto: 1337,
+    puerto_dev: 5555
+  }
+
+  return r
 })
 
 
