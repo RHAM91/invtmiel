@@ -19,7 +19,7 @@
 
             </div>
 
-            <div class="cerrar_sesion_btn" @click="salir">
+            <div class="cerrar_sesion_btn" @click="cerrar_sesion">
                 <i class="fas fa-sign-out-alt"></i>
             </div>
 
@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { pregunta } from '../components/functions/alertas'
 export default {
     name: 'Main',
     computed: {
         ...mapGetters(['ip_api']),
-        ...mapState(['token_sesion'])
+        ...mapState(['token_sesion', 'info_seteada'])
     },
     data() {
         return {
@@ -45,27 +45,26 @@ export default {
         set_ruta(ruta){
             this.$router.replace(ruta)
         },
-        salir(){
-            pregunta({titulo: 'Seguro que deseas salir?', texto: 'Está a punto de salir del sistema', afirmacion: 'Si, salir!'}, async (i) =>{
-                if (i) {
-                    localStorage.removeItem('kat')
-                    
-                    setTimeout(() => {
-                        this.$router.replace('Login')
-                    }, 3000);
-
-                    // let b = await axios.post(`http://${IP}:${PUERTO}/api/login/cerrarsesion`, f, this.$store.state.token)
-                    // console.log(b.data)
-                }
-            })
-        },
-        ...mapActions(['descargar_datos','conexion_socket'])
+        ...mapActions(['descargar_datos','conexion_socket', 'obtener_version', 'cerrar_sesion']),
+        ...mapMutations(['set_info_seteada'])
     },
     mounted() {
 
         if (this.token_sesion != '' || this.token_sesion != null || this.token_sesion != undefined) {
-            this.descargar_datos()
-            this.conexion_socket()
+
+            if (!this.info_seteada) { // esto es para que no se ejecute de manera incremental cuando se retorna a Main, ocurria que cuando regresa a esta ruta se realiza 2,3, 4 veces la conexión
+                setTimeout(() => {
+                    this.descargar_datos()
+                    this.conexion_socket()
+                    this.obtener_version()
+                }, 1000);
+
+                this.set_info_seteada(true)
+
+            }else{
+                console.log('Data ya ha sido seteada')
+            }
+
         }else{
             console.log('No hay token asociado...')
         }

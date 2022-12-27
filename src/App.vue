@@ -5,7 +5,7 @@
 
 
     <div class="version">
-        Vxxx__: {{this.$store.state.version_app.version}}
+        V: {{this.$store.state.version_app.version}}
     </div>
 
 
@@ -34,13 +34,24 @@ export default {
     if (this.token_sesion == '' || this.token_sesion == null || this.token_sesion == undefined) {
       console.log('Sesión está cerrada')
     }else{
-      setTimeout(() => { // DEBEN CARGAR PRIMERO LAS PREFERENCIAS Y YA CUANDO ESTÉN DISPONIBLES SE OCUPAN PARA LAS SIGUIENTES FUNCIONES
+
+      // ESTA VALIDACION ES PARA QUE SE EJECUTE LAS FUNCIONES DE ABAJO SOLO SI NO ES MAIN, DEBIDO QUE SI ES MAIN SE EJECUTAN DOBLES
+      // ENTONCES VALIDA SI SE ENCUENTRA EN LA RUTA MAIN, SI ES ASI, EJECUTA LA FUNCIONES QUE SE CONFIGURARON EN LA RUTAN MAIN
+      // CASO CONTRARIO EJECUTA ESAS MISMAS FUNCIONES PERO DESDE APP.VUE PARA QUE SEA GENERAL, ESTO SERVIRÁ PARA QUE SE PUEDAN VISUALIZAR DATOS
+      // EN TODAS LAS DEMAS RUTAS EXCEPTO MAIN.
+
+      // POR DECIRLO ASI, MAIN EJECUTA SUS PROPIAS FUNCIONES "descarga_datos, conexión_socket, obtener_version" ENTONCES PARA QUE NO SEAN DOBLES SE HIZO LA VALIDACIÓN DE LA RUTA
+
+      if (this.$route.name != 'Main') { 
+        setTimeout(() => { // DEBEN CARGAR PRIMERO LAS PREFERENCIAS Y YA CUANDO ESTÉN DISPONIBLES SE OCUPAN PARA LAS SIGUIENTES FUNCIONES
   
-        this.descargar_datos() // DESCARGA LOS DATOS PREDETERMINADOS AL INICIAR LA APP
-        this.conexion_socket() // LLAMA A LA FUNCION PARA INCIAR CONEXIÓN CON EL SEVIDOR
-        this.obtener_version() // OBTIENE LA VERSIÓN ACTUAL DE LA APP
-  
-      }, 1000);
+          this.descargar_datos() // DESCARGA LOS DATOS PREDETERMINADOS AL INICIAR LA APP
+          this.conexion_socket() // LLAMA A LA FUNCION PARA INCIAR CONEXIÓN CON EL SEVIDOR
+          this.obtener_version() // OBTIENE LA VERSIÓN ACTUAL DE LA APP
+    
+        }, 1000);
+      }
+
     }
 
   },

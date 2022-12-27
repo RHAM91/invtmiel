@@ -86,6 +86,8 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+
+  console.log('cerrando app....')
 })
 
 app.on('activate', () => {
@@ -111,6 +113,8 @@ app.on('ready', async () => {
   
 })
 
+
+
 // --> EVENTO PARA BUSCAR Y MOSTRAR ACTUALIZACION
 
 // ipcMain.on('app_version', (event)=>{
@@ -128,7 +132,6 @@ app.on('ready', async () => {
 // INSTALAR ACTUALIZACION
 
 ipcMain.on('instalar_actualizacion', (event, args)=>{
-  console.log('Background.js: ejecutando....')
   autoUpdater.quitAndInstall()
 })
 

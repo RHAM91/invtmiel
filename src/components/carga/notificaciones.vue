@@ -24,7 +24,6 @@ export default {
     methods: {
         push_version(){
             window.api.send('instalar_actualizacion', true)
-            console.log('ejecutar actualizacion')
         }
     },
 }

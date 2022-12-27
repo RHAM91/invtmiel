@@ -64,6 +64,14 @@
                         Configuración
                     </div>
 
+                    <div class="retornar_a_main btn_menu" @click="retornar">
+                        <div class="icono_boton">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                        Escritorio
+                    </div>
+
+
                 </div>
             </div>
 
@@ -108,11 +116,22 @@ export default {
     methods: {
         set_modulo(modulo){
             this.modulo = modulo
+        },
+        retornar(){
+            this.$router.replace('Main')
+            //this.$router.push('Main')
+
         }
     },
 }
 </script>
 
 <style>
-   
+    .retornar_a_main{
+        width: 150px;
+        height: 35px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
 </style>

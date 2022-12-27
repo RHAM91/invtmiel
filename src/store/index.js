@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '@/router'
 import axios from 'axios'
 import VuexPersist from 'vuex-persist'
 import { minix, pregunta } from '../components/functions/alertas'
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     reload: false,
     actualizacion_disponible: false,
     version_app: '',
+    info_seteada: false,
     rutas: [
       {api:'categorias?sort=categoria', set: 'set_categorias'},
       {api:'bodegas?sort=bodega', set: 'set_bodegas'},
@@ -105,6 +107,9 @@ export default new Vuex.Store({
     },
     set_version_app(state, data){
       state.version_app = data
+    },
+    set_info_seteada(state, data){
+      state.info_seteada = data
     },
 
     // PRODUCCION
@@ -259,6 +264,25 @@ export default new Vuex.Store({
         
       }
     },
+
+    // CERRAR SESIÓN
+
+    cerrar_sesion(){
+      pregunta({titulo: 'Seguro que deseas salir?', texto: 'Está a punto de salir del sistema', afirmacion: 'Si, salir!'}, async (i) =>{
+          if (i) {
+              localStorage.removeItem('kat')
+              
+              setTimeout(() => {
+                  router.replace('Login')
+              }, 3000);
+
+              // let b = await axios.post(`http://${IP}:${PUERTO}/api/login/cerrarsesion`, f, this.$store.state.token)
+              // console.log(b.data)
+          }
+      })
+
+    },
+
     // DATOS DE VERSIONES DE APP
 
     obtener_version({commit, state, dispatch}){
