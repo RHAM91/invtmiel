@@ -27,7 +27,8 @@ function buscarActualizacion(){
   autoUpdater.on('update-downloaded', () => {
 
     setTimeout(()=>{ // ESPERA 10 SEGUNDOS PARA ENVIAR EL MENSAJE DE QUE DEBE SER ACTUALIZADA LA APP
-      win.webContents.send('actualizacion', true)
+      //win.webContents.send('actualizacion_disponible', true)
+      window.api.send('actualizacion_disponible', true)
     }, 10000)
 
     clearInterval(actualizacion) // al momento de descargar la actualizacion detiene el ciclo de busqueda
@@ -112,10 +113,10 @@ app.on('ready', async () => {
 
 // --> EVENTO PARA BUSCAR Y MOSTRAR ACTUALIZACION
 
-ipcMain.on('app_version', (event)=>{
-  event.sender.send('app_version', {version: app.getVersion()}) // ENVIA LA VERSION DEL SOFWARE
-  buscarActualizacion() // BUSCAR ACTUALIZACION
-})
+// ipcMain.on('app_version', (event)=>{
+//   event.sender.send('app_version', {version: app.getVersion()}) // ENVIA LA VERSION DEL SOFWARE
+//   buscarActualizacion() // BUSCAR ACTUALIZACION
+// })
 
 
 // --> EVENTO QUE APLICA ACTUALIZACION DE INTERFACE GRAFICA
@@ -158,8 +159,12 @@ ipcMain.handle("get/preferencias", async (event, args)=>{
   return r
 })
 
-ipcMain.on('test/data', (event) =>{
-  console.log(event)
+
+// --> EVENTO PARA BUSCAR Y MOSTRAR ACTUALIZACION
+
+ipcMain.on('get/version', (event, args) =>{
+  event.sender.send('version_app', {version: app.getVersion()})
+  buscarActualizacion()
 })
 
 

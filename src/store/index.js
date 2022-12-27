@@ -34,7 +34,8 @@ export default new Vuex.Store({
     token_sesion: '',
     preferencias: {},
     reload: false,
-    actualizacion_disponible: true,
+    actualizacion_disponible: false,
+    version_app: '',
     rutas: [
       {api:'categorias?sort=categoria', set: 'set_categorias'},
       {api:'bodegas?sort=bodega', set: 'set_bodegas'},
@@ -99,8 +100,11 @@ export default new Vuex.Store({
     set_reload(state, data){
       state.reload = data
     },
-    set_actualizacion_disponible(state,data){
+    set_actualizacion_disponible(state, data){
       state.actualizacion_disponible = data
+    },
+    set_version_app(state, data){
+      state.version_app = data
     },
 
     // PRODUCCION
@@ -254,6 +258,18 @@ export default new Vuex.Store({
       } catch (error) {
         
       }
+    },
+    // DATOS DE VERSIONES DE APP
+
+    obtener_version({commit, state, dispatch}){
+      window.api.send('get/version', 'a')
+      window.api.receive('version_app', (args) =>{
+        commit('set_version_app', args)
+      })
+
+      window.api.receive('actualizacion_disponible', (args) =>{
+        commit('set_actualizacion_disponible', true)
+      })
     },
 
     //INICIA LA CONEXIÓN SOCKET.IO AL SERVIDOR

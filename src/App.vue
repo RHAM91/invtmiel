@@ -1,6 +1,14 @@
 <template>
   <div id="app">
+
     <router-view/>
+
+
+    <div class="version">
+        V: {{this.$store.state.version_app.version}}
+    </div>
+
+    
   </div>
 </template>
 <script>
@@ -17,7 +25,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['obtener_preferencias', 'descargar_datos', 'conexion_socket']),
+    ...mapActions(['obtener_preferencias', 'descargar_datos', 'conexion_socket', 'obtener_version']),
   },
   mounted() {
     // TRIGGER
@@ -30,6 +38,7 @@ export default {
   
         this.descargar_datos() // DESCARGA LOS DATOS PREDETERMINADOS AL INICIAR LA APP
         this.conexion_socket() // LLAMA A LA FUNCION PARA INCIAR CONEXIÓN CON EL SEVIDOR
+        this.obtener_version() // OBTIENE LA VERSIÓN ACTUAL DE LA APP
   
       }, 1000);
     }
@@ -133,5 +142,19 @@ export default {
             flex-direction: row-reverse;
             padding-right: 10px;
         }
-  
+
+  /* Estilos de prueba */
+
+  .version{
+    width: 160px;
+    height: 35px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -80px;
+  }
 </style>
