@@ -28,12 +28,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import { pregunta } from '../components/functions/alertas'
 export default {
     name: 'Main',
     computed: {
-        ...mapGetters(['ip_api'])
+        ...mapGetters(['ip_api']),
+        ...mapState(['token_sesion'])
     },
     data() {
         return {
@@ -58,6 +59,17 @@ export default {
                 }
             })
         },
+        ...mapActions(['descargar_datos','conexion_socket'])
+    },
+    mounted() {
+
+        if (this.token_sesion != '' || this.token_sesion != null || this.token_sesion != undefined) {
+            this.descargar_datos()
+            this.conexion_socket()
+        }else{
+            console.log('No hay token asociado...')
+        }
+
     },
 }
 </script>

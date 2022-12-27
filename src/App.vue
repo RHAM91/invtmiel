@@ -4,13 +4,14 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import { io } from 'socket.io-client'
+import { mapActions, mapGetters, mapState } from 'vuex'
+//import { io } from 'socket.io-client'
 
 export default {
   name: 'Principal',
   computed: {
-    ...mapGetters(['ip_api', 'puerto'])
+    ...mapGetters(['ip_api', 'puerto']),
+    ...mapState(['token_sesion'])
   },
   data() {
     return {
@@ -33,17 +34,24 @@ export default {
       })
 
     },
-    ...mapActions(['obtener_preferencias', 'descargar_datos','actualizar_modulo']),
+    ...mapActions(['obtener_preferencias', 'descargar_datos', 'conexion_socket']),
   },
   mounted() {
     // TRIGGER
     this.obtener_preferencias()
-    setTimeout(() => { // DEBEN CARGAR PRIMERO LAS PREFERENCIAS Y YA CUANDO ESTÉN DISPONIBLES SE OCUPAN PARA LAS SIGUIENTES FUNCIONES
 
-      this.descargar_datos() // DESCARGA LOS DATOS PREDETERMINADOS AL INICIAR LA APP
-      this.iniciar_conexion_socket() // ACTUALIZA EN TIEMPO REAL LOS CAMBIOS QUE SE PRODUZCAN 
+    if (this.token_sesion == '' || this.token_sesion == null || this.token_sesion == undefined) {
+      console.log('Sesión está cerrada')
+    }else{
+      setTimeout(() => { // DEBEN CARGAR PRIMERO LAS PREFERENCIAS Y YA CUANDO ESTÉN DISPONIBLES SE OCUPAN PARA LAS SIGUIENTES FUNCIONES
+  
+        this.descargar_datos() // DESCARGA LOS DATOS PREDETERMINADOS AL INICIAR LA APP
+        //this.iniciar_conexion_socket() // ACTUALIZA EN TIEMPO REAL LOS CAMBIOS QUE SE PRODUZCAN 
+        this.conexion_socket()
+  
+      }, 1000);
+    }
 
-    }, 1000);
   },
 }
 </script>

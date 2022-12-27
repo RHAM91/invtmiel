@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import VuexPersist from 'vuex-persist'
 import { minix, pregunta } from '../components/functions/alertas'
+import { io } from 'socket.io-client'
 
 Vue.use(Vuex)
 
@@ -245,6 +246,24 @@ export default new Vuex.Store({
       } catch (error) {
         
       }
+    },
+
+    //INICIA LA CONEXIÓN SOCKET.IO AL SERVIDOR
+
+    async conexion_socket({commit, state, dispatch}){
+      const SERVER_URL = `http://${state.preferencias.IP}:${state.preferencias.puerto}`
+      const socket = io(SERVER_URL, { transports : ['websocket'] })
+
+      socket.on('connect', ()=>{
+        socket.on('message:bienvenida', (data)=>{
+          console.log(data)
+        })
+
+        socket.on('action:update', (data)=>{
+          dispatch('actualizar_modulo', data)
+        })
+      })
+
     },
 
     // ACTUALIZA LOS MODULOS QUE VIENEN POR SOCKET
