@@ -63,6 +63,8 @@ const pregunta = function(data, callback){
       }).then((result) => {
         if (result.value) {
             callback(true);
+        }else{
+          callback(false)
         }
       })
 }

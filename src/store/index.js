@@ -38,6 +38,7 @@ export default new Vuex.Store({
     actualizacion_disponible: false,
     version_app: '',
     info_seteada: false,
+    load_tiempo: false,
     rutas: [
       {api:'categorias?sort=categoria', set: 'set_categorias'},
       {api:'bodegas?sort=bodega', set: 'set_bodegas'},
@@ -110,6 +111,9 @@ export default new Vuex.Store({
     },
     set_info_seteada(state, data){
       state.info_seteada = data
+    },
+    set_load_tiempo(state, data){
+      state.load_tiempo = data
     },
 
     // PRODUCCION
@@ -269,15 +273,21 @@ export default new Vuex.Store({
 
     cerrar_sesion({commit, state}){
       pregunta({titulo: 'Seguro que deseas salir?', texto: 'Está a punto de salir del sistema', afirmacion: 'Si, salir!'}, async (i) =>{
-          if (i) {
-              localStorage.removeItem('kat')
-              
+
+        
+        if (i) {
+          commit('set_load_tiempo', true)
+          localStorage.removeItem('kat')
+
               setTimeout(() => {
                   router.replace('Login')
               }, 3000);
 
+
               // let b = await axios.post(`http://${IP}:${PUERTO}/api/login/cerrarsesion`, f, this.$store.state.token)
               // console.log(b.data)
+          }else{
+            commit('set_load_tiempo', false)
           }
       })
 

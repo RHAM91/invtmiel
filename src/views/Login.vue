@@ -79,7 +79,10 @@ export default {
                 console.log(e)
             }
         },
-        ...mapMutations(['set_token_sesion'])
+        ...mapMutations(['set_token_sesion', 'set_load_tiempo'])
+    },
+    mounted() {
+        this.set_load_tiempo(false)
     },
 }
 </script>

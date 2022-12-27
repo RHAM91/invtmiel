@@ -19,9 +19,19 @@
 
             </div>
 
-            <div class="cerrar_sesion_btn" @click="cerrar_sesion">
+            <div  v-if="!load_tiempo" class="cerrar_sesion_btn" @click="salir">
                 <i class="fas fa-sign-out-alt"></i>
             </div>
+
+
+            <div v-if="load_tiempo" class="contenedor_loading_cerrando_ico">
+                <div class="loading_cerrando_ico">
+                    <img src="@/assets/pacman.gif" style="width: 100%;" alt="">
+                </div>
+                Cerrando sesión
+            </div>
+
+            
 
         </div>
     </div>
@@ -29,21 +39,25 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
-import { pregunta } from '../components/functions/alertas'
 export default {
     name: 'Main',
     computed: {
         ...mapGetters(['ip_api']),
-        ...mapState(['token_sesion', 'info_seteada'])
+        ...mapState(['token_sesion', 'info_seteada', 'load_tiempo'])
     },
     data() {
         return {
-            
+            cs: true
         }
     },
     methods: {
         set_ruta(ruta){
             this.$router.replace(ruta)
+        },
+        salir(){
+            this.cs = false
+            this.cerrar_sesion()
+            
         },
         ...mapActions(['descargar_datos','conexion_socket', 'obtener_version', 'cerrar_sesion']),
         ...mapMutations(['set_info_seteada'])
@@ -144,5 +158,22 @@ export default {
             .cerrar_sesion_btn:hover{
                 background-color: #252935;
                 color: white;
+            }
+
+            .contenedor_loading_cerrando_ico{
+                width: 250px;
+                height: 45px;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                bottom: 15px;
+                left: 15px;
+            }
+
+
+            .loading_cerrando_ico{
+                width: 45px;
+                height: 45px;
+                margin-right: 10px;
             }
 </style>
