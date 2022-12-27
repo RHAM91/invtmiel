@@ -48,6 +48,8 @@ export default {
         width: 100%;
         height: 35px;
         background-color: #6a43b0;
+        display: flex;
+        flex-direction: row-reverse;
     }
 
     .contenedor_secciones{
@@ -131,7 +133,5 @@ export default {
             flex-direction: row-reverse;
             padding-right: 10px;
         }
-
-  
   
 </style>

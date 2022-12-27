@@ -158,6 +158,10 @@ ipcMain.handle("get/preferencias", async (event, args)=>{
   return r
 })
 
+ipcMain.on('test/data', (event) =>{
+  console.log(event)
+})
+
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {

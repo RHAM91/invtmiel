@@ -2,7 +2,7 @@
     <!-- VISTA PRINCIPAL INVENTARIO -->
     <div class="contenedor_inicio">
         <div class="franja_">
-
+            <Notificaciones />
         </div>
         <div class="contenedor_secciones">
             <!-- MENU PARA BOTONES -->
@@ -88,13 +88,17 @@ import Configuracion from '@/components/Inventario/Configuracion/Configuracion.v
 import Proveedores from '@/components/Inventario/Proveedores/Proveedores.vue'
 import Entradas from '@/components/Inventario/Entradas/Entradas.vue'
 
+import Notificaciones from '@/components/carga/notificaciones.vue'
+
 export default {
     name: 'VistaInventario',
     components:{
         Productos,
         Configuracion,
         Proveedores,
-        Entradas
+        Entradas,
+
+        Notificaciones
     },
     data() {
         return {

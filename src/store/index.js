@@ -33,6 +33,8 @@ export default new Vuex.Store({
 
     token_sesion: '',
     preferencias: {},
+    reload: false,
+    actualizacion_disponible: true,
     rutas: [
       {api:'categorias?sort=categoria', set: 'set_categorias'},
       {api:'bodegas?sort=bodega', set: 'set_bodegas'},
@@ -93,6 +95,12 @@ export default new Vuex.Store({
     },
     set_token_sesion(state, data){
       state.token_sesion = data
+    },
+    set_reload(state, data){
+      state.reload = data
+    },
+    set_actualizacion_disponible(state,data){
+      state.actualizacion_disponible = data
     },
 
     // PRODUCCION
