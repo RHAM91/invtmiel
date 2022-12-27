@@ -3,7 +3,7 @@
         <div v-if="reload" class="recargar">
             <img src="@/assets/reload.gif" style="width: 90%;" alt="">
         </div>
-        <div v-if="actualizacion_disponible" class="recargar">
+        <div v-if="actualizacion_disponible" class="recargar" @click="push_version">
             <img src="@/assets/download.png" style="width: 90%;" alt="">
         </div>
     </div>
@@ -20,7 +20,12 @@ export default {
         return {
             
         }
-    }
+    },
+    methods: {
+        push_version(){
+            window.api.send('instalar_actualizacion', true)
+        }
+    },
 }
 </script>
 

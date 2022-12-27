@@ -27,8 +27,8 @@ function buscarActualizacion(){
   autoUpdater.on('update-downloaded', () => {
 
     setTimeout(()=>{ // ESPERA 10 SEGUNDOS PARA ENVIAR EL MENSAJE DE QUE DEBE SER ACTUALIZADA LA APP
-      //win.webContents.send('actualizacion_disponible', true)
-      window.api.send('actualizacion_disponible', true)
+      win.webContents.send('actualizacion_disponible', true)
+      //window.api.send('actualizacion_disponible', true)
     }, 10000)
 
     clearInterval(actualizacion) // al momento de descargar la actualizacion detiene el ciclo de busqueda
@@ -167,6 +167,12 @@ ipcMain.on('get/version', (event, args) =>{
   buscarActualizacion()
 })
 
+
+// INSTALAR ACTUALIZACION
+
+ipcMain.on('instalar_actualizacion', (event, args)=>{
+  autoUpdater.quitAndInstall()
+})
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
