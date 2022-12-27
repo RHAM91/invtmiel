@@ -4,13 +4,11 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
-//import { io } from 'socket.io-client'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Principal',
   computed: {
-    ...mapGetters(['ip_api', 'puerto']),
     ...mapState(['token_sesion'])
   },
   data() {
@@ -19,21 +17,6 @@ export default {
     }
   },
   methods: {
-    async iniciar_conexion_socket(){
-      const SERVER_URL = `http://${this.ip_api}:${this.puerto}`
-      const socket = io(SERVER_URL, { transports : ['websocket'] })
-
-      socket.on("connect", ()=>{
-        socket.on("message:bienvenida", (data)=>{
-          console.log(data)
-        })
-
-        socket.on("action:update",(data)=>{
-          this.actualizar_modulo(data)
-        })
-      })
-
-    },
     ...mapActions(['obtener_preferencias', 'descargar_datos', 'conexion_socket']),
   },
   mounted() {
@@ -46,8 +29,7 @@ export default {
       setTimeout(() => { // DEBEN CARGAR PRIMERO LAS PREFERENCIAS Y YA CUANDO ESTÉN DISPONIBLES SE OCUPAN PARA LAS SIGUIENTES FUNCIONES
   
         this.descargar_datos() // DESCARGA LOS DATOS PREDETERMINADOS AL INICIAR LA APP
-        //this.iniciar_conexion_socket() // ACTUALIZA EN TIEMPO REAL LOS CAMBIOS QUE SE PRODUZCAN 
-        this.conexion_socket()
+        this.conexion_socket() // LLAMA A LA FUNCION PARA INCIAR CONEXIÓN CON EL SEVIDOR
   
       }, 1000);
     }
