@@ -5,7 +5,7 @@
 
 
     <div class="version">
-        Vxx: {{this.$store.state.version_app.version}}
+        V: {{this.$store.state.version_app.version}}
     </div>
 
 

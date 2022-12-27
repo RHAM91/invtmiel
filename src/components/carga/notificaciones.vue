@@ -3,7 +3,7 @@
         <div v-if="reload" class="recargar">
             <img src="@/assets/reload.gif" style="width: 90%;" alt="">
         </div>
-        <div v-if="actualizacion_disponible" class="recargar" @click="push_version">
+        <div v-if="actualizacion_disponible" class="recargar cursor_" @click="push_version">
             <img src="@/assets/download.png" style="width: 90%;" alt="">
         </div>
     </div>
@@ -24,6 +24,7 @@ export default {
     methods: {
         push_version(){
             window.api.send('instalar_actualizacion', true)
+            console.log('ejecutar actualizacion')
         }
     },
 }
@@ -33,7 +34,6 @@ export default {
     .obj_notificacion{
         width: auto;
         height: 35px;
-        border: 1px dashed green;
         display: flex;
     }
         .recargar{
@@ -42,5 +42,9 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        .cursor_{
+            cursor: pointer;
         }
 </style>

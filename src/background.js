@@ -121,10 +121,16 @@ app.on('ready', async () => {
 
 // --> EVENTO QUE APLICA ACTUALIZACION DE INTERFACE GRAFICA
 
-ipcMain.on('ok_update', (event) =>{ 
+// ipcMain.on('ok_update', (event) =>{ 
+//   autoUpdater.quitAndInstall()
+// })
+
+// INSTALAR ACTUALIZACION
+
+ipcMain.on('instalar_actualizacion', (event, args)=>{
+  console.log('Background.js: ejecutando....')
   autoUpdater.quitAndInstall()
 })
-
 
 // --> EVENTO CONECTAR CON BASE DE DATOS SQLITE3
 
@@ -168,11 +174,7 @@ ipcMain.on('get/version', (event, args) =>{
 })
 
 
-// INSTALAR ACTUALIZACION
 
-ipcMain.on('instalar_actualizacion', (event, args)=>{
-  autoUpdater.quitAndInstall()
-})
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
