@@ -4,7 +4,7 @@ const { ipcRenderer, contextBridge} = require('electron')
 const WINDOW_API  = {
     preferencias: () => ipcRenderer.invoke("get/preferencias"),
     send: (channel, data) =>{
-        let validChannels = ['get/version', 'actualizacion_disponible']
+        let validChannels = ['get/version', 'actualizacion_disponible', 'instalar_actualizacion']
         if (validChannels.includes(channel)) {
             ipcRenderer.send(channel, data)
         }
