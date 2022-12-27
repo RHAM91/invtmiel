@@ -8,7 +8,6 @@
         V: {{this.$store.state.version_app.version}}
     </div>
 
-
   </div>
 </template>
 <script>

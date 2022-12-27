@@ -267,7 +267,7 @@ export default new Vuex.Store({
 
     // CERRAR SESIÓN
 
-    cerrar_sesion(){
+    cerrar_sesion({commit, state}){
       pregunta({titulo: 'Seguro que deseas salir?', texto: 'Está a punto de salir del sistema', afirmacion: 'Si, salir!'}, async (i) =>{
           if (i) {
               localStorage.removeItem('kat')
