@@ -54,7 +54,8 @@ export default new Vuex.Store({
     proveedores:[],
     clientes: [],
     filtros:{
-      filtro_proveedores: ''
+      filtro_proveedores: '',
+      filtro_clientes: ''
     }
 
   },
@@ -89,6 +90,19 @@ export default new Vuex.Store({
         var regex = "^(?=.*\\b" + x.join("\\b)(?=.*\\b") + "\\b)"
 
         var filtro = state.proveedores.filter(proveedor => filtrar_acentos(proveedor.attributes.proveedor).match(regex))
+
+        return filtro
+      }
+    },
+    filtro_clientes_(state){
+      if(state.filtros.filtro_clientes.length > 2){
+        // let filtro = state.proveedores.filter(proveedor => proveedor.attributes.proveedor.includes(state.filtros.filtro_proveedores.toUpperCase()))
+
+        var parametro = state.filtros.filtro_clientes
+        var x = parametro.split(' ')
+        var regex = "^(?=.*\\b" + x.join("\\b)(?=.*\\b") + "\\b)"
+
+        var filtro = state.clientes.filter(cliente => filtrar_acentos(cliente.attributes.cliente).match(regex))
 
         return filtro
       }
@@ -134,6 +148,9 @@ export default new Vuex.Store({
     },
     set_filtro_proveedores(state, data){
       state.filtros.filtro_proveedores = data
+    },
+    set_filtro_clientes(state, data){
+      state.filtros.filtro_clientes = data
     },
     set_clientes(state, data){
       state.clientes = data

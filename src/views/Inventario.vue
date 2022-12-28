@@ -15,7 +15,7 @@
                 <div class="contenedor_menu">
                     <!-- SECCION DONDE VAN LOS BOTONES DEL MENU -->
        
-                    <div class="btn_menu">
+                    <div class="btn_menu" @click="set_modulo('salidas')">
                         <div class="icono_boton">
                             <i class="fas fa-truck-loading"></i>
                         </div>
@@ -84,6 +84,7 @@
                 <Proveedores v-if="modulo == 'proveedores'" />
                 <Entradas v-if="modulo == 'entradas'" />
                 <Clientes v-if="modulo =='clientes'" />
+                <Salidas v-if="modulo == 'salidas'" />
 
             </div>
         </div>
@@ -97,6 +98,7 @@ import Configuracion from '@/components/Inventario/Configuracion/Configuracion.v
 import Proveedores from '@/components/Inventario/Proveedores/Proveedores.vue'
 import Entradas from '@/components/Inventario/Entradas/Entradas.vue'
 import Clientes from '@/components/Inventario/Clientes/Clientes.vue'
+import Salidas from '@/components/Inventario/Salidas/Salidas.vue'
 
 import Notificaciones from '@/components/carga/notificaciones.vue'
 
@@ -108,6 +110,7 @@ export default {
         Proveedores,
         Entradas,
         Clientes,
+        Salidas,
 
         Notificaciones
     },
