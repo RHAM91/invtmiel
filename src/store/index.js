@@ -269,6 +269,15 @@ export default new Vuex.Store({
       }
     },
 
+    verificar_proceso_env(){
+
+      if(process.env.NODE_ENV === 'development'){
+        return true
+      }else{
+        return false
+      }
+    },
+
     // CERRAR SESIÓN
 
     cerrar_sesion({commit, state}){

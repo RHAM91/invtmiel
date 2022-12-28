@@ -4,8 +4,8 @@
     <router-view/>
 
 
-    <div class="version">
-        V: {{this.$store.state.version_app.version}}
+    <div v-if="version" class="version">
+        Dev_V: {{ this.$store.state.version_app.version }}
     </div>
 
   </div>
@@ -20,11 +20,18 @@ export default {
   },
   data() {
     return {
-      
+      version: true
     }
   },
   methods: {
-    ...mapActions(['obtener_preferencias', 'descargar_datos', 'conexion_socket', 'obtener_version']),
+    ...mapActions(['obtener_preferencias', 'descargar_datos', 'conexion_socket', 'obtener_version', 'verificar_proceso_env']),
+  },
+  beforeMount(){
+    (async ()=>{
+      let r = await this.verificar_proceso_env()
+      this.version = r
+    })()
+
   },
   mounted() {
     // TRIGGER
