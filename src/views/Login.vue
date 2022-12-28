@@ -42,8 +42,8 @@ export default {
     },
     data() {
         return {
-            usuario: 'romario',
-            pass: '124578asD.$'
+            usuario: '',
+            pass: ''
         }
     },
     methods: {
