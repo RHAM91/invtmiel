@@ -36,12 +36,12 @@
                         Productos
                     </div>
 
-                    <!-- <div class="btn_menu">
+                    <div class="btn_menu" @click="set_modulo('clientes')">
                         <div class="icono_boton">
                             <i class="fas fa-users"></i>
                         </div>
                         Clientes
-                    </div> -->
+                    </div>
 
                     <div class="btn_menu" @click="set_modulo('proveedores')">
                         <div class="icono_boton">
@@ -83,6 +83,7 @@
                 <Configuracion v-if="modulo == 'configuracion'" />
                 <Proveedores v-if="modulo == 'proveedores'" />
                 <Entradas v-if="modulo == 'entradas'" />
+                <Clientes v-if="modulo =='clientes'" />
 
             </div>
         </div>
@@ -95,6 +96,7 @@ import Productos from '@/components/Inventario/Productos/Productos.vue'
 import Configuracion from '@/components/Inventario/Configuracion/Configuracion.vue'
 import Proveedores from '@/components/Inventario/Proveedores/Proveedores.vue'
 import Entradas from '@/components/Inventario/Entradas/Entradas.vue'
+import Clientes from '@/components/Inventario/Clientes/Clientes.vue'
 
 import Notificaciones from '@/components/carga/notificaciones.vue'
 
@@ -105,6 +107,7 @@ export default {
         Configuracion,
         Proveedores,
         Entradas,
+        Clientes,
 
         Notificaciones
     },

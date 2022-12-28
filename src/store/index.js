@@ -44,6 +44,7 @@ export default new Vuex.Store({
       {api:'bodegas?sort=bodega', set: 'set_bodegas'},
       {api:'marcas?sort=marca', set: 'set_marcas'},
       {api:'proveedores?sort=proveedor', set: 'set_proveedores'},
+      {api:'clientes?sort=cliente', set: 'set_clientes'},
     ],
 
     //PRODUCCION
@@ -51,6 +52,7 @@ export default new Vuex.Store({
     bodegas: [],
     marcas: [],
     proveedores:[],
+    clientes: [],
     filtros:{
       filtro_proveedores: ''
     }
@@ -132,6 +134,9 @@ export default new Vuex.Store({
     },
     set_filtro_proveedores(state, data){
       state.filtros.filtro_proveedores = data
+    },
+    set_clientes(state, data){
+      state.clientes = data
     }
   },
   actions: {
